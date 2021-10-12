@@ -42,7 +42,7 @@ export function PickupMap({ storesData }: PickupContainerProps) {
     if (map.current) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current as HTMLDivElement,
-      style: 'mapbox://styles/asthe0/ckt9swin161fy17lpacu1ymer',
+      style: String(process.env.NEXT_PUBLIC_MAPBOX_MAP_STYLES),
       center: [139.860436, 35.652278],
       zoom: 14,
     });
