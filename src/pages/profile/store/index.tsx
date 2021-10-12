@@ -60,7 +60,7 @@ const ProfileStore: NextPage<ProfileStoreProps> = ({
     <Container>
       <ProfileSideNavbar current="store" />
 
-      {!storeData.id ? (
+      {!storeData?.id ? (
         <CreateStoreSuggesstionContainer>
           <h2>Oops, looks like you don&apos;t own a store yet</h2>
           <p>Create a store by click the button below</p>
