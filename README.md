@@ -1,15 +1,11 @@
 
-![Logo](https://github.com/nishidabruno/uber-eats-clone-web/blob/main/.github/preview.png?raw=true)
+![Logo](https://raw.githubusercontent.com/nishidabruno/uber-eats-clone/main/.github/preview.png)
 
-    
-##  🏗 Work in progress
-This project is under development and the assets have not yet been provided.
-
-  
-## Tech Stack
+## Technologies used in this project
 
  - [React.js (Next.js)](https://nextjs.org/)
  - [Typescript](https://www.typescriptlang.org/)
+ - [Redux](https://redux.js.org/)
  - [styled-components](https://styled-components.com/)
  - [Mapbox](https://www.mapbox.com/)
   
