@@ -1,0 +1,52 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "axios": "^0.21.4",
+    "framer-motion": "^4.1.17",
+    "immer": "^9.0.6",
+    "jwt-decode": "^3.1.2",
+    "mapbox-gl": "^2.4.1",
+    "next": "11.1.0",
+    "nookies": "^2.5.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.5",
+    "redux": "^4.1.1",
+    "redux-devtools-extension": "^2.13.9",
+    "sharp": "^0.29.0",
+    "styled-components": "^5.3.1",
+    "swiper": "^7.0.2",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^11.1.2",
+    "@types/mapbox-gl": "^2.4.1",
+    "@types/node": "^16.7.5",
+    "@types/react": "17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "@types/styled-components": "^5.1.13",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-next": "11.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4",
+    "prettier": "^2.3.2",
+    "typescript": "4.4.2"
+  }
+}
