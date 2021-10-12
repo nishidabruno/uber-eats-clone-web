@@ -1,9 +1,10 @@
+import axios from 'axios';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from 'next';
-import { destroyCookie, parseCookies } from 'nookies';
+import { parseCookies, destroyCookie } from 'nookies';
 
 export function withSSRAuth<T>(fn: GetServerSideProps<T>): GetServerSideProps {
   return async (
@@ -23,13 +24,22 @@ export function withSSRAuth<T>(fn: GetServerSideProps<T>): GetServerSideProps {
     try {
       return await fn(ctx);
     } catch (err) {
-      destroyCookie(ctx, 'uber-eats-clone.token');
+      if (
+        axios.isAxiosError(err) &&
+        err.response?.data.message === 'Invalid token.'
+      ) {
+        destroyCookie(ctx, 'uber-eats-clone.token', { path: '/' });
+
+        return {
+          redirect: {
+            destination: '/',
+            permanent: false,
+          },
+        };
+      }
 
       return {
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
+        props: {} as T,
       };
     }
   };
