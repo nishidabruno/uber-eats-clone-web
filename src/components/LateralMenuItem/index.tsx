@@ -1,4 +1,5 @@
-import { FiChevronUp } from 'react-icons/fi';
+import { useState } from 'react';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { Container, DrawingContainer } from './styles';
 
 interface LateralMenuProps {
@@ -7,11 +8,18 @@ interface LateralMenuProps {
 }
 
 export function LateralMenuItem({ title, children }: LateralMenuProps) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  function handleAccordion() {
+    setIsOpen(prev => !prev);
+  }
   return (
-    <Container>
+    <Container isOpen={isOpen}>
       <DrawingContainer>
         <h3>{title}</h3>
-        <FiChevronUp size={24} />
+        <button type="button" onClick={handleAccordion}>
+          {isOpen ? <FiChevronUp size={24} /> : <FiChevronDown size={24} />}
+        </button>
       </DrawingContainer>
       {children}
     </Container>

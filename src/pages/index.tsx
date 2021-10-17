@@ -1,4 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Navbar } from '../components/Navbar';
 import { CategoriesList } from '../components/CategoriesList';
 import { PromotionSlider } from '../components/PromotionSlider';
@@ -19,6 +21,9 @@ import {
 import { useSellingMethod } from '../hooks/contexts/SellingMethod';
 import { useWindowDimension } from '../hooks/contexts/WindowDimensionContext';
 import { api } from '../services/apiClient';
+import { setStores } from '../store/modules/stores/actions';
+import { IState } from '../store';
+import { IStoreData } from '../store/modules/stores/types';
 
 const adBannersData = [
   {
@@ -41,18 +46,6 @@ const adBannersData = [
   },
 ];
 
-interface StoresData {
-  id: string;
-  name: string;
-  delivery_fee: string;
-  delivery_time: string;
-  image: string;
-  coordinates_id: {
-    latitude: string;
-    longitude: string;
-  };
-}
-
 interface CategoriesListProps {
   id: string;
   name: string;
@@ -60,13 +53,22 @@ interface CategoriesListProps {
 }
 
 interface Data {
-  storesData: StoresData[];
+  storesData: IStoreData[];
   categoriesData: CategoriesListProps[];
 }
 
 const Home: NextPage<Data> = ({ storesData, categoriesData }) => {
   const { sellingMethod } = useSellingMethod();
   const { windowDimension } = useWindowDimension();
+
+  const dispatch = useDispatch();
+  const stores = useSelector<IState, IStoreData[]>(
+    state => state.stores.storesData
+  );
+
+  useEffect(() => {
+    dispatch(setStores(storesData));
+  }, [dispatch, storesData]);
 
   return (
     <Container>
@@ -86,14 +88,14 @@ const Home: NextPage<Data> = ({ storesData, categoriesData }) => {
             <PromotionSlider data={adBannersData} />
 
             <ContentDivider>
-              {windowDimension > 1024 && <LateralMenu />}
+              {windowDimension > 1024 && <LateralMenu data={storesData} />}
 
               <AllCategoriesList>
                 <h2>All stores</h2>
                 <CardsContainer>
-                  {storesData.map((store, index) => (
+                  {stores.map(store => (
                     <StoreCard
-                      key={String(index)}
+                      key={store.id}
                       id={store.id}
                       title={store.name}
                       deliveryFee={store.delivery_fee}
@@ -128,6 +130,6 @@ export const getStaticProps: GetStaticProps = async () => {
       storesData,
       categoriesData,
     },
-    revalidate: 60 * 60 * 24,
+    revalidate: 60,
   };
 };

@@ -7,6 +7,7 @@ import { StoreCard } from '../../components/RestuarantCard';
 import { useSellingMethod } from '../../hooks/contexts/SellingMethod';
 import { useWindowDimension } from '../../hooks/contexts/WindowDimensionContext';
 import { api } from '../../services/apiClient';
+import { IStoreData } from '../../store/modules/stores/types';
 
 import {
   Container,
@@ -18,22 +19,10 @@ import {
   AllCategoriesList,
 } from '../../styles/category';
 
-interface StoreData {
-  id: string;
-  name: string;
-  delivery_fee: string;
-  delivery_time: string;
-  image: string;
-  coordinates_id: {
-    latitude: string;
-    longitude: string;
-  };
-}
-
 interface Data {
   storesData: {
     name: string;
-    stores: StoreData[];
+    stores: IStoreData[];
   };
 }
 
@@ -53,7 +42,9 @@ const Home: NextPage<Data> = ({ storesData }) => {
         <Main>
           <>
             <ContentDivider>
-              {windowDimension > 1024 && <LateralMenu />}
+              {windowDimension > 1024 && (
+                <LateralMenu data={storesData.stores} />
+              )}
 
               <AllCategoriesList>
                 <h2>{storesData.name}</h2>

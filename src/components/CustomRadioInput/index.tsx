@@ -3,13 +3,18 @@ import { Container } from './styles';
 interface CustomRadioInputProps {
   name?: string;
   checked?: boolean;
+  onClick?: () => void;
 }
 
-export function CustomRadioInput({ name, checked }: CustomRadioInputProps) {
+export function CustomRadioInput({
+  name,
+  checked,
+  onClick,
+}: CustomRadioInputProps) {
   return (
     <Container>
       <input type="radio" name={name} defaultChecked={checked} />
-      <span />
+      <span aria-hidden="true" onClick={onClick} />
     </Container>
   );
 }

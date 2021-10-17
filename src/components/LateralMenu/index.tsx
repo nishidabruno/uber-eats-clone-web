@@ -1,3 +1,11 @@
+import { useDispatch } from 'react-redux';
+import {
+  getAllStoresByDeliveryTime,
+  getStoresByMaxDeliveryFee,
+  getStoresByPriceRange,
+  setStores,
+} from '../../store/modules/stores/actions';
+import { IStoreData } from '../../store/modules/stores/types';
 import { Button } from '../Button';
 import { CustomRadioInput } from '../CustomRadioInput';
 import { LateralMenuItem } from '../LateralMenuItem';
@@ -13,10 +21,45 @@ import {
   RangeSteps,
   RangePointContainer,
   DeliveyFeeValuesContainer,
-  DietaryContainer,
 } from './styles';
 
-export function LateralMenu() {
+interface StoresData {
+  data: IStoreData[];
+}
+
+export function LateralMenu({ data }: StoresData) {
+  const dispatch = useDispatch();
+
+  function handleSortByDeliveryTime() {
+    dispatch(getAllStoresByDeliveryTime());
+  }
+
+  function handleSetDefault() {
+    dispatch(setStores(data));
+  }
+
+  function handleDeliveryFee(value: string) {
+    switch (value) {
+      case '0':
+        dispatch(getStoresByMaxDeliveryFee(data, 100));
+        break;
+      case '1':
+        dispatch(getStoresByMaxDeliveryFee(data, 300));
+        break;
+      case '2':
+        dispatch(getStoresByMaxDeliveryFee(data, 500));
+        break;
+
+      default:
+        dispatch(getStoresByMaxDeliveryFee(data, 501));
+        break;
+    }
+  }
+
+  function handlePriceRange(range: number) {
+    dispatch(getStoresByPriceRange(data, range));
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -26,44 +69,52 @@ export function LateralMenu() {
             <SortingContainer>
               <SortingItem>
                 <label>
-                  Picked for you (default)
-                  <CustomRadioInput name="sortOption" checked />
+                  <CustomRadioInput
+                    name="sortOption"
+                    checked
+                    onClick={handleSetDefault}
+                  />
                 </label>
+                <p>Picked for you (default)</p>
               </SortingItem>
               <SortingItem>
                 <label>
-                  Most Popular
-                  <CustomRadioInput name="sortOption" />
+                  <CustomRadioInput
+                    name="sortOption"
+                    onClick={handleSortByDeliveryTime}
+                  />
                 </label>
-              </SortingItem>
-              <SortingItem>
-                <label>
-                  Rating
-                  <CustomRadioInput name="sortOption" />
-                </label>
-              </SortingItem>
-              <SortingItem>
-                <label>
-                  Delivery Time
-                  <CustomRadioInput name="sortOption" />
-                </label>
+                <p>Delivery Time</p>
               </SortingItem>
             </SortingContainer>
           </LateralMenuItem>
 
           <LateralMenuItem title="Price range">
             <PriceRangeContainer>
-              <Button size="adaptative">¥</Button>
-              <Button size="adaptative">¥¥</Button>
-              <Button size="adaptative">¥¥¥</Button>
-              <Button size="adaptative">¥¥¥¥</Button>
+              <Button size="adaptative" onClick={() => handlePriceRange(200)}>
+                ¥
+              </Button>
+              <Button size="adaptative" onClick={() => handlePriceRange(400)}>
+                ¥¥
+              </Button>
+              <Button size="adaptative" onClick={() => handlePriceRange(600)}>
+                ¥¥¥
+              </Button>
+              <Button size="adaptative" onClick={() => handlePriceRange(601)}>
+                ¥¥¥¥
+              </Button>
             </PriceRangeContainer>
           </LateralMenuItem>
 
           <LateralMenuItem title="Max delivery Fee">
             <MaxDeliveryFeeContainer>
               <RangePointContainer>
-                <input type="range" max="3" step="1" />
+                <input
+                  type="range"
+                  max="3"
+                  step="1"
+                  onChange={event => handleDeliveryFee(event.target.value)}
+                />
                 <RangeSteps>
                   <span />
                   <span />
@@ -76,15 +127,6 @@ export function LateralMenu() {
                 <span>¥500+</span>
               </DeliveyFeeValuesContainer>
             </MaxDeliveryFeeContainer>
-          </LateralMenuItem>
-
-          <LateralMenuItem title="Max delivery Fee">
-            <DietaryContainer>
-              <Button size="adaptative">Vegetarian</Button>
-              <Button size="adaptative">Vegan</Button>
-              <Button size="adaptative">Gluten-free</Button>
-              <Button size="adaptative">Allergy Friendly</Button>
-            </DietaryContainer>
           </LateralMenuItem>
         </OptionsList>
       </Wrapper>

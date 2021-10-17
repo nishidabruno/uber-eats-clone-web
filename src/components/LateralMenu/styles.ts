@@ -43,21 +43,19 @@ export const DrawingContainer = styled.div`
 `;
 
 export const SortingItem = styled.div`
-  height: 25px;
   display: flex;
+  z-index: 10;
 
   & + div {
     margin-top: 18px;
   }
 
-  label {
+  p {
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
 
     font-weight: 500;
-
-    cursor: pointer;
   }
 `;
 
@@ -139,17 +137,5 @@ export const DeliveyFeeValuesContainer = styled.div`
   margin-top: 16px;
   span {
     font-weight: 500;
-  }
-`;
-
-/* ------ Dietary------ */
-export const DietaryContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-
-  button {
-    margin-right: 6px;
-    margin-top: 12px;
   }
 `;
