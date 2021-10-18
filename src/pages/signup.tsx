@@ -5,8 +5,12 @@ import Image from 'next/image';
 import { useState, useRef, FormEvent } from 'react';
 import { FiAlertTriangle, FiLock, FiMail, FiUser } from 'react-icons/fi';
 import * as yup from 'yup';
+import { useIntl } from 'react-intl';
 import { FormInput } from '../components/Forms/input';
 import { RectButton } from '../components/RectButton';
+import { api } from '../services/apiClient';
+import { withSSRGuest } from '../utils/withSSRGuest';
+import { en } from '../content/locale';
 
 import {
   Container,
@@ -15,8 +19,6 @@ import {
   InputContainer,
   LoginOptionContainer,
 } from '../styles/signup';
-import { api } from '../services/apiClient';
-import { withSSRGuest } from '../utils/withSSRGuest';
 
 interface ValidationErrorData {
   name: string | undefined;
@@ -30,6 +32,8 @@ const SignUp: NextPage = () => {
   const fullnameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordConfirmationRef = useRef<HTMLInputElement>(null);
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
 
   const router = useRouter();
 
@@ -81,8 +85,8 @@ const SignUp: NextPage = () => {
       <AuthContainer>
         <Image src="/assets/logo.svg" width={180} height={50} />
         <SignUpForm onSubmit={handleSignUp}>
-          <h2>Register</h2>
-          <p>Create an account to use our services</p>
+          <h2>{f('SIGNUP_REGISTER')}</h2>
+          <p>{f('SIGNUP_SUBTITLE')}</p>
           <InputContainer>
             {error.map(err => (
               <span key={err.name}>
@@ -90,17 +94,29 @@ const SignUp: NextPage = () => {
                 {err.message}
               </span>
             ))}
-            <FormInput placeholder="Email" type="email" ref={emailRef}>
+            <FormInput
+              placeholder={f('SIGNUP_INPUT_EMAIL')}
+              type="email"
+              ref={emailRef}
+            >
               <FiMail size={24} />
             </FormInput>
-            <FormInput placeholder="Fullname" type="text" ref={fullnameRef}>
+            <FormInput
+              placeholder={f('SIGNUP_INPUT_FULLNAME')}
+              type="text"
+              ref={fullnameRef}
+            >
               <FiUser size={24} />
             </FormInput>
-            <FormInput placeholder="Password" type="password" ref={passwordRef}>
+            <FormInput
+              placeholder={f('SIGNUP_INPUT_PASSWORD')}
+              type="password"
+              ref={passwordRef}
+            >
               <FiLock size={24} />
             </FormInput>
             <FormInput
-              placeholder="Password confirmation"
+              placeholder={f('SIGNUP_INPUT_PASSWORD_CONFIRM')}
               type="password"
               ref={passwordConfirmationRef}
             >
@@ -109,13 +125,13 @@ const SignUp: NextPage = () => {
           </InputContainer>
 
           <RectButton type="submit">
-            <p>Register</p>
+            <p>{f('SIGNUP_CONFIRM_BUTTON')}</p>
           </RectButton>
 
           <LoginOptionContainer>
-            <p>Already have an account?</p>
+            <p>{f('SIGNUP_ALREADY_ACC')}</p>
             <Link href="signin">
-              <a>Login</a>
+              <a>{f('SIGNUP_SIGNIN_LINK')}</a>
             </Link>
           </LoginOptionContainer>
         </SignUpForm>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { FaShoppingCart } from 'react-icons/fa';
 import { FiMinusCircle } from 'react-icons/fi';
+import { useIntl } from 'react-intl';
 import { ModalCloseButton } from '../ModalCloseButton';
 import { RectButtonLink } from '../RectButtonLink';
 import { IState } from '../../store';
@@ -12,6 +13,7 @@ import {
   removeProductFromCart,
 } from '../../store/modules/cart/actions';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { en } from '../../content/locale';
 
 import {
   Container,
@@ -43,6 +45,8 @@ export function CartModal({ show: showCartProp, handleShow }: CartModalProps) {
   const { query } = useRouter();
   const modalRef = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(modalRef, () => setShow(false));
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
 
   function handleShowCart() {
     setShow(prev => !prev);
@@ -71,7 +75,7 @@ export function CartModal({ show: showCartProp, handleShow }: CartModalProps) {
 
       {cartData.length !== 0 ? (
         <OrderContainer>
-          <h2>Your orders</h2>
+          <h2>{f('CART_MODAL_TITLE')}</h2>
           <OrdersQuantity>
             {cartData.map(order => (
               <Order key={order.product.id}>
@@ -96,7 +100,9 @@ export function CartModal({ show: showCartProp, handleShow }: CartModalProps) {
           <CheckoutContainer>
             <RectButtonLink href={`/order/${query.id}`}>
               <SpanIcon>2</SpanIcon>
-              <NextButtonTitle>Next: Checkout</NextButtonTitle>
+              <NextButtonTitle>
+                {f('CART_MODAL_NEXT_BUTTON_TEXT')}
+              </NextButtonTitle>
               <ProductPrice>¥{cartTotalPrice}</ProductPrice>
             </RectButtonLink>
           </CheckoutContainer>
@@ -104,7 +110,7 @@ export function CartModal({ show: showCartProp, handleShow }: CartModalProps) {
       ) : (
         <Content>
           <FaShoppingCart size={44} color="#AFAFAF" />
-          <span>Add items from a restaurant or store to start a new cart</span>
+          <span>{f('CART_MODAL_EMPTY_TEXT')}</span>
         </Content>
       )}
     </Container>

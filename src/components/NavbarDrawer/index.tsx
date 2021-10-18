@@ -2,7 +2,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ImAndroid, ImAppleinc } from 'react-icons/im';
 import { useRouter } from 'next/router';
+import { useIntl } from 'react-intl';
 import { useDrawer } from '../../hooks/contexts/NavbarDrawerContext';
+import { Button } from '../Button';
+import { useAuth } from '../../hooks/contexts/AuthContext';
+import { en } from '../../content/locale';
 
 import {
   Container,
@@ -14,13 +18,13 @@ import {
   FreeSpace,
   RectButton,
 } from './styles';
-import { Button } from '../Button';
-import { useAuth } from '../../hooks/contexts/AuthContext';
 
 export function NavbarDrawer() {
   const { user } = useAuth();
   const { isOpen, setIsOpen } = useDrawer();
   const router = useRouter();
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
 
   function handleSignInRedirect() {
     setIsOpen(prev => !prev);
@@ -48,17 +52,19 @@ export function NavbarDrawer() {
       >
         <Main>
           <RectButton type="button" onClick={handleSignInRedirect}>
-            {user.id ? 'Account settings' : 'Sign in'}
+            {user.id
+              ? f('NAVBAR_DRAWER_BUTTON_SETTINGS')
+              : f('NAVBAR_DRAWER_BUTTON_SIGNIN')}
           </RectButton>
           <ul>
             <li>
               <Link href="/signup">
-                <a>Create an account</a>
+                <a>{f('NAVBAR_DRAWER_CREATE_ACCOUNT')}</a>
               </Link>
             </li>
             <li>
               <Link href="/profile/store">
-                <a>Add your restaurant</a>
+                <a>{f('NAVBAR_DRAWER_ADD_RESTAURANT')}</a>
               </Link>
             </li>
           </ul>
@@ -67,7 +73,7 @@ export function NavbarDrawer() {
         <Footer>
           <FooterInfo>
             <Image src="/assets/app-logo.svg" width={56} height={56} />
-            <p>There&apos;s more to love in the app.</p>
+            <p>{f('NAVBAR_DRAWER_INSTALL_APP_MESSAGE')}</p>
           </FooterInfo>
           <ButtonsContainer>
             <Button size="medium">

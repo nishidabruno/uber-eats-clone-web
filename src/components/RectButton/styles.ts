@@ -24,6 +24,11 @@ export const Container = styled.button<ButtonProps>`
       props.color === 'green' ? 'var(--success_hover)' : 'var(--dark_hover)'};
   }
 
+  &:active {
+    background-color: ${props =>
+      props.color === 'green' ? 'var(--success_active)' : 'var(--dark_active)'};
+  }
+
   &:disabled {
     cursor: not-allowed;
   }

@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useIntl } from 'react-intl';
 import { FiFacebook, FiGlobe, FiInstagram, FiTwitter } from 'react-icons/fi';
+
+import { en } from '../../content/locale';
 
 import {
   Container,
@@ -17,6 +20,9 @@ import {
 } from './styles';
 
 export function Footer() {
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
+
   return (
     <Container>
       <FooterTop>
@@ -49,61 +55,61 @@ export function Footer() {
           <LinksSection>
             <LinkItem>
               <Link href="/">
-                <a>問い合わせる</a>
+                <a>{f('FOOTER_GET_HELP')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>加盟レストランとして登録する</a>
+                <a>{f('FOOTER_ADD_YOUR_RESTAURANT')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>登録して配達を開始する</a>
+                <a>{f('FOOTER_SIGN_UP_TO_DELIVER')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>ビジネス用アカウントを作成する</a>
+                <a>{f('FOOTER_CREATE_BUSINESS_ACC')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>初回の注文がお得に</a>
+                <a>{f('FOOTER_SAVE_ON_FIRST_ORDER')}</a>
               </Link>
             </LinkItem>
           </LinksSection>
           <LinksSection>
             <LinkItem>
               <Link href="/">
-                <a>近くのレストラン</a>
+                <a>{f('FOOTER_RESTAURANTS_NEAR')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>すべての都市を表示</a>
+                <a>{f('FOOTER_ALL_CITIES')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>すべての国を見る</a>
+                <a>{f('FOOTER_ALL_COUNTRIES')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>ブログを読む</a>
+                <a>{f('FOOTER_READ_BLOG')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
-                <a>Uber Eats について</a>
+                <a>{f('FOOTER_ABOUT')}</a>
               </Link>
             </LinkItem>
             <LinkItem>
               <Link href="/">
                 <a>
                   <FiGlobe />
-                  日本語
+                  {f('FOOTER_LANGUAGE')}
                 </a>
               </Link>
             </LinkItem>

@@ -29,12 +29,17 @@ export const Container = styled.button<ButtonProps>`
   color: ${props => (props.dark ? 'var(--primary)' : 'var(--secondary)')};
   font-weight: 500;
 
+  p {
+    margin-left: 8px;
+  }
+
   &:hover {
     background-color: ${props =>
       props.dark ? 'var(--dark_hover)' : 'var(--light_hover)'};
   }
 
-  p {
-    margin-left: 8px;
+  &:active {
+    background-color: ${props =>
+      props.dark ? 'var(--dark_active)' : 'var(--light_active)'};
   }
 `;

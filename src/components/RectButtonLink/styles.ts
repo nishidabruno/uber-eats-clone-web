@@ -18,6 +18,11 @@ export const Container = styled.a`
     background-color: var(--dark_hover);
   }
 
+  &:active {
+    background-color: ${props =>
+      props.color === 'green' ? 'var(--success_active)' : 'var(--dark_active)'};
+  }
+
   &:disabled {
     cursor: not-allowed;
     background-color: var(--dark_hover);

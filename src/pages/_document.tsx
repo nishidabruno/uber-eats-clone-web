@@ -45,14 +45,25 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
             rel="stylesheet"
           />
-          {/* <link
-            href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
+          <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap"
             rel="stylesheet"
-          /> */}
+          />
+          <link
+            rel="alternate"
+            hrefLang="en-US"
+            href={process.env.NEXT_PUBLIC_APP_URL}
+          />
+          <link
+            rel="alternate"
+            hrefLang="ja"
+            href={`${process.env.NEXT_PUBLIC_APP_URL}/ja`}
+          />
         </Head>
         <body>
           <Main />

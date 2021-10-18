@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useIntl } from 'react-intl';
+
+import { en } from '../../content/locale/en';
 
 import {
   Container,
@@ -30,6 +33,8 @@ export function StoreCard({
   deliveryFee,
   deliveryEstimatedTime,
 }: StoreCardProps) {
+  const { formatMessage } = useIntl();
+  const f = (fid: keyof typeof en) => formatMessage({ id: fid });
   return (
     <Link href={`/store/${id}`} passHref>
       <Container>
@@ -48,9 +53,11 @@ export function StoreCard({
         </RestaurantDetailsContainer>
         <DeliveryDetails>
           <OrderDetailsContainer>
-            <DeliveryFee>¥ {deliveryFee} Delivery Fee </DeliveryFee>
+            <DeliveryFee>
+              ¥ {deliveryFee} {f('STORE_CARD_DELIVERY_FEE')}
+            </DeliveryFee>
             <DeliveryEstimatedTime>
-              • {deliveryEstimatedTime} min
+              • {deliveryEstimatedTime} {f('STORE_CARD_MINUTES')}
             </DeliveryEstimatedTime>
           </OrderDetailsContainer>
         </DeliveryDetails>

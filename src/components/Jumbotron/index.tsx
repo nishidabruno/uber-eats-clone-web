@@ -1,16 +1,13 @@
-import { FiUserPlus } from 'react-icons/fi';
-import { FaRegHeart } from 'react-icons/fa';
-
-import { Button } from '../Button';
+import { useIntl } from 'react-intl';
+import { api } from '../../services/apiClient';
+import { en } from '../../content/locale/en';
 
 import {
   Container,
   StoreImageDetails,
   StoreDetails,
-  StoreButtons,
   Background,
 } from './styles';
-import { api } from '../../services/apiClient';
 
 interface JumbotronProps {
   image: string;
@@ -25,26 +22,19 @@ export function Jumbotron({
   deliveryTime,
   title,
 }: JumbotronProps) {
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
+
   return (
     <Container>
       <StoreImageDetails>
         <StoreDetails>
           <h1>{title}</h1>
           <span>
-            ¥{deliveryFee} Delivery Fee • Delivered in {deliveryTime} min • 4.7
-            (200+)
+            ¥{deliveryFee} {f('STORE_JUMBOTRON_DELIVERY_FEE')} • Delivered in{' '}
+            {deliveryTime} {f('STORE_JUMBOTRON_MINUTES')} • 4.7 (200+)
           </span>
         </StoreDetails>
-
-        <StoreButtons>
-          <Button size="medium">
-            <FiUserPlus size={20} />
-            <span>Start group order</span>
-          </Button>
-          <a>
-            <FaRegHeart color="#fff" size={24} />
-          </a>
-        </StoreButtons>
       </StoreImageDetails>
       <Background
         src={`${api.defaults.baseURL}/stores/${image}`}

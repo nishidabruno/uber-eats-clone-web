@@ -12,13 +12,11 @@ export const StoreImageDetails = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-
   padding: 20px 40px;
 
   @media (max-width: 768px) {
     flex-direction: column-reverse;
     padding: 8px 16px;
-    /* align-items: flex-start; */
   }
 `;
 
@@ -49,22 +47,6 @@ export const StoreDetails = styled.div`
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
-    }
-  }
-`;
-
-export const StoreButtons = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-
-  flex-shrink: 0;
-
-  button {
-    margin-right: 16px;
-
-    span {
-      margin-left: 8px;
     }
   }
 `;

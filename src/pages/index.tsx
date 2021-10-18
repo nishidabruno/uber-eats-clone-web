@@ -1,6 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useIntl } from 'react-intl';
 import { Navbar } from '../components/Navbar';
 import { CategoriesList } from '../components/CategoriesList';
 import { PromotionSlider } from '../components/PromotionSlider';
@@ -24,6 +25,7 @@ import { api } from '../services/apiClient';
 import { setStores } from '../store/modules/stores/actions';
 import { IState } from '../store';
 import { IStoreData } from '../store/modules/stores/types';
+import { en } from '../content/locale/en';
 
 const adBannersData = [
   {
@@ -65,6 +67,8 @@ const Home: NextPage<Data> = ({ storesData, categoriesData }) => {
   const stores = useSelector<IState, IStoreData[]>(
     state => state.stores.storesData
   );
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
 
   useEffect(() => {
     dispatch(setStores(storesData));
@@ -91,7 +95,7 @@ const Home: NextPage<Data> = ({ storesData, categoriesData }) => {
               {windowDimension > 1024 && <LateralMenu data={storesData} />}
 
               <AllCategoriesList>
-                <h2>All stores</h2>
+                <h2>{f('STORES_LIST_TITLE')}</h2>
                 <CardsContainer>
                   {stores.map(store => (
                     <StoreCard

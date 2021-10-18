@@ -1,3 +1,4 @@
+import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import {
   getAllStoresByDeliveryTime,
@@ -23,11 +24,15 @@ import {
   DeliveyFeeValuesContainer,
 } from './styles';
 
+import { en } from '../../content/locale/en';
+
 interface StoresData {
   data: IStoreData[];
 }
 
 export function LateralMenu({ data }: StoresData) {
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
   const dispatch = useDispatch();
 
   function handleSortByDeliveryTime() {
@@ -63,9 +68,9 @@ export function LateralMenu({ data }: StoresData) {
   return (
     <Container>
       <Wrapper>
-        <h3>All stores</h3>
+        <h3>{f('LATERAL_MENU_TITLE')}</h3>
         <OptionsList>
-          <LateralMenuItem title="Sort">
+          <LateralMenuItem title={f('LATERAL_MENU_SORT_TITLE')}>
             <SortingContainer>
               <SortingItem>
                 <label>
@@ -75,7 +80,7 @@ export function LateralMenu({ data }: StoresData) {
                     onClick={handleSetDefault}
                   />
                 </label>
-                <p>Picked for you (default)</p>
+                <p>{f('LATERAL_MENU_SORT_PICKED_FOR_YOU')}</p>
               </SortingItem>
               <SortingItem>
                 <label>
@@ -84,12 +89,12 @@ export function LateralMenu({ data }: StoresData) {
                     onClick={handleSortByDeliveryTime}
                   />
                 </label>
-                <p>Delivery Time</p>
+                <p>{f('LATERAL_MENU_SORT_DELIVERY_TIME')}</p>
               </SortingItem>
             </SortingContainer>
           </LateralMenuItem>
 
-          <LateralMenuItem title="Price range">
+          <LateralMenuItem title={f('LATERAL_MENU_PRICE_RANGE_TITLE')}>
             <PriceRangeContainer>
               <Button size="adaptative" onClick={() => handlePriceRange(200)}>
                 ¥
@@ -106,7 +111,7 @@ export function LateralMenu({ data }: StoresData) {
             </PriceRangeContainer>
           </LateralMenuItem>
 
-          <LateralMenuItem title="Max delivery Fee">
+          <LateralMenuItem title={f('LATERAL_MENU_MAX_DELIVERY_FEE_TITLE')}>
             <MaxDeliveryFeeContainer>
               <RangePointContainer>
                 <input

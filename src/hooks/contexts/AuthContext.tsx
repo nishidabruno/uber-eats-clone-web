@@ -31,7 +31,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   const router = useRouter();
 
   const signOut = useCallback(() => {
-    destroyCookie(undefined, 'uber-eats-clone.token');
+    destroyCookie(undefined, 'uber-eats-clone.token', { path: '/' });
     setUser({} as User);
 
     router.push('/');

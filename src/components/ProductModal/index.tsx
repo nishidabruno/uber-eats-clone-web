@@ -2,16 +2,17 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { useModal } from '../../hooks/contexts/ProductModalVisibility';
-
+import { ModalCloseButton } from '../ModalCloseButton';
 import { RectButton } from '../RectButton';
-
 import { api } from '../../services/apiClient';
 import { useCart } from '../../hooks/contexts/CartContext';
 import {
   addProductToCart,
   getCartTotal,
 } from '../../store/modules/cart/actions';
+import { en } from '../../content/locale';
 
 import {
   Container,
@@ -25,7 +26,6 @@ import {
   AddtoOrderButttonPrice,
   ProductCountContainer,
 } from './styles';
-import { ModalCloseButton } from '../ModalCloseButton';
 
 export function ProductModal() {
   const [productQuantity, setProductQuantity] = useState(1);
@@ -33,6 +33,8 @@ export function ProductModal() {
   const { setIsOpen, product } = useModal();
   const { setIsOpenCart } = useCart();
   const dispatch = useDispatch();
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
 
   function handleCloseProductModal() {
     setIsOpen(prev => !prev);
@@ -73,11 +75,7 @@ export function ProductModal() {
         <ProductDetails>
           <h1>{product.name}</h1>
           <p>{product.description}</p>
-          <span>
-            アレルゲン情報などに関するお問い合わせは店舗に直接ご連絡いただけます:
-            店舗の電話番号：[000000000]。注意：今回のご注文に関するお問い合わせはこちらの店舗番号ではなく、Uber
-            Eats サポートまでご連絡ください。
-          </span>
+          <span>{f('PRODUCT_MODAL_ALLERGY_WARNING_TEXT')}</span>
         </ProductDetails>
         <OrderingContainer>
           <ProductCountContainer>
@@ -92,7 +90,8 @@ export function ProductModal() {
           <RectButton onClick={handleAddProductToCart}>
             <p />
             <AddtoOrderButttonTitle>
-              Add {productQuantity} to order
+              {f('PRODUCT_MODAL_ADD_TO_ORDER_TEXT_START')} {productQuantity}{' '}
+              {f('PRODUCT_MODAL_ADD_TO_ORDER_TEXT_END')}
             </AddtoOrderButttonTitle>
             <AddtoOrderButttonPrice>¥ {product.price}</AddtoOrderButttonPrice>
           </RectButton>

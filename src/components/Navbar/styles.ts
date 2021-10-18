@@ -16,7 +16,6 @@ export const Container = styled.div`
   position: relative;
   min-height: 96px;
   display: flex;
-  /* flex: 1; */
   align-items: center;
 
   @media (max-width: 1274px) {
@@ -38,23 +37,16 @@ export const Logo = styled.div`
 `;
 
 export const SellingMethod = styled.div`
-  max-width: 155px;
+  /* max-width: 200px; */
   position: relative;
   height: 48px;
   display: flex;
   align-items: center;
   border-radius: 24px;
-
   margin-left: 40px;
   padding: 4px;
-
   background-color: var(--shape_primary);
-  /* 
-  @media (max-width: 1440px) {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-  } */
+
   @media (max-width: 1024px) {
     margin-left: auto;
   }
@@ -65,9 +57,7 @@ export const CurrentSelected = styled.div<CurrentSelectedProps>`
   width: 50%;
   height: calc(100% - 10px);
   border-radius: 24px;
-
   transition: transform 0.2s;
-
   transform: ${props =>
     props.currentSellingMethod === 'delivery'
       ? 'translateX(0)'
@@ -78,37 +68,29 @@ export const CurrentSelected = styled.div<CurrentSelectedProps>`
 
 export const Delivery = styled.div`
   height: 100%;
-  width: 50%;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   z-index: 10;
   border-radius: 24px;
-
-  padding: 0 1rem;
-
-  font-weight: 500;
-
+  padding: 0 14px;
   cursor: pointer;
 `;
 
 export const Pickup = styled.div`
   height: 100%;
-  width: 50%;
+  width: 100%;
   display: flex;
   align-items: center;
   z-index: 10;
   border-radius: 24px;
-
-  padding: 0 1rem;
-
-  font-weight: 500;
-
+  padding: 0 16px;
   cursor: pointer;
 `;
 
 export const LocationContainer = styled.div<NavBarInterface>`
   margin-left: ${props => (props.showSellingMethod ? '16px' : '40px')};
-  /* justify-self: center; */
 
   @media (max-width: 1024px) {
     margin-left: 0;
@@ -119,12 +101,9 @@ export const InputContainer = styled.div<InputProps>`
   display: flex;
   align-items: center;
   flex: 1;
-
   margin-left: 64px;
   padding: 16px;
-
   background-color: var(--shape_secondary);
-
   transition: box-shadow 0.3s ease-in-out;
 
   box-shadow: ${props =>
@@ -162,7 +141,6 @@ export const ButtonsContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  /* height: 100%; */
   margin-left: 24px;
 
   @media (max-width: 1024px) {

@@ -61,6 +61,10 @@ export const RectButton = styled.button`
   &:hover {
     background-color: var(--dark_hover);
   }
+
+  &:active {
+    background-color: var(--dark_active);
+  }
 `;
 
 export const Footer = styled.footer`

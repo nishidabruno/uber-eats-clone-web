@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -8,10 +8,14 @@ import { BsClockFill } from 'react-icons/bs';
 import { parseCookies } from 'nookies';
 import { useState } from 'react';
 import { FiAlertTriangle } from 'react-icons/fi';
+import { useIntl } from 'react-intl';
 import { RectButton } from '../../components/RectButton';
 import { IState } from '../../store';
 import { ICartState } from '../../store/modules/cart/types';
 import { useAuth } from '../../hooks/contexts/AuthContext';
+import { resetCart } from '../../store/modules/cart/actions';
+import { api } from '../../services/apiClient';
+import { en } from '../../content/locale';
 
 import {
   Container,
@@ -27,8 +31,6 @@ import {
   ErrorContainer,
   TotalContainer,
 } from '../../styles/order';
-import { api } from '../../services/apiClient';
-import { resetCart } from '../../store/modules/cart/actions';
 
 const Order: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +40,10 @@ const Order: NextPage = () => {
   const { user } = useAuth();
   const { query, push } = useRouter();
   const dispatch = useDispatch();
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
+  const fNumber = (id: keyof typeof en, time: number) =>
+    formatMessage({ id }, { number: time });
 
   async function handleOrder() {
     setIsLoading(true);
@@ -80,10 +86,10 @@ const Order: NextPage = () => {
       </Header>
       <Main>
         <LeftMenu>
-          <h2>Delivery details</h2>
+          <h2>{f('ORDER_DELIVERY_DETAILS')}</h2>
           <Address>
             <p>Japan, 123-456, Tokyo, Shibuya</p>
-            <span>Meet at door</span>
+            <span>{f('ORDER_DELIVERY_METHOD')}</span>
           </Address>
         </LeftMenu>
         <RightMenu>
@@ -91,34 +97,34 @@ const Order: NextPage = () => {
             <StoreDetailsItem>
               <FaShoppingBag size={22} />
               <p>
-                From <span>McDonalds</span>
+                {f('ORDER_FROM')} <span>McDonalds</span>
               </p>
             </StoreDetailsItem>
             <StoreDetailsItem>
               <BsClockFill size={22} />
-              <p>Arriving in 20-30 min</p>
+              <p>{fNumber('ORDER_ARRIVING_TIME', 20)}</p>
             </StoreDetailsItem>
             <StoreDetailsItem>
               <FaMapPin size={22} />
-              <p>Meet at door</p>
+              <p>{f('ORDER_DELIVERY_METHOD')}</p>
             </StoreDetailsItem>
           </StoreDetails>
 
           <OrderDetails>
             <OrderDetailItem>
-              <p>Subtotal • {cartData.totals.totalQuantity} items</p>
+              <p>{fNumber('ORDER_SUBTOTAL', cartData.totals.totalQuantity)}</p>
               <p>¥{cartData.totals.totalPrice}</p>
             </OrderDetailItem>
             <OrderDetailItem>
-              <p>Delivery fee</p>
+              <p>{f('ORDER_DELIVERY_FEE')}</p>
               <p>¥0</p>
             </OrderDetailItem>
             <OrderDetailItem>
-              <p>Taxes</p>
+              <p>{f('ORDER_TAXES')}</p>
               <p>¥0</p>
             </OrderDetailItem>
             <TotalContainer>
-              <h3>Total</h3>
+              <h3>{f('ORDER_TOTAL')}</h3>
               <h3>¥{cartData.totals.totalPrice}</h3>
             </TotalContainer>
             <ErrorContainer>
@@ -134,7 +140,7 @@ const Order: NextPage = () => {
               onClick={handleOrder}
               disabled={isLoading}
             >
-              <p>{!isLoading ? 'Place order' : 'Loading...'}</p>
+              <p>{!isLoading ? f('ORDER_PLACE_ORDER') : 'Loading...'}</p>
             </RectButton>
           </OrderDetails>
         </RightMenu>

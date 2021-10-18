@@ -4,5 +4,8 @@ module.exports = {
   images: {
     domains: ['localhost'],
   },
-  // plugins: [['styled-components', { ssr: true }]],
+  i18n: {
+    locales: ['en', 'ja'],
+    defaultLocale: 'en',
+  },
 };

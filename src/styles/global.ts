@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     --secondary: #000000;
     --success: #419155;
     --success_hover: #5ba76e;
+    --success_active: #74be87;
     --green: #06C167;
     --warning: #EED202 ;
     --shape_primary: #EEEEEE;
@@ -20,27 +21,11 @@ export const GlobalStyle = createGlobalStyle`
     --text_light: #757575;
     --text_detail: #545454;
     --light_hover: #F0F0F0;
+    --light_active: #DBDBDB;
     --dark_hover: #1A1A1A;
+    --dark_active: #333333;
     --error: #DA3633;
   }
-
-  /* @media (max-width: 1080px) {
-    html {
-      font-size: 81.25%; // 13px
-    }
-  }
-
-  @media (max-width: 720px) {
-    html {
-      font-size: 75%; // 12px
-    }
-  }
-  
-  @media (min-width: 1080px) {
-    html {
-      font-size: 87.5%; // 14px
-    }
-  } */
 
   html {
     font-size: 87.5%; /*  14px */
@@ -51,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body, input, textarea, button, select,::-webkit-file-upload-button {
-    font: 400 1rem "Roboto", sans-serif;
+    font: 400 1rem "Roboto", "Noto Sans JP", sans-serif;
   }
 
   button {
