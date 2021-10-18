@@ -239,7 +239,7 @@ const CreateStore: NextPage = () => {
             <FormInput
               placeholder="Store image"
               type="file"
-              accept="image/png image/jpeg"
+              accept="image/png, image/jpeg"
               ref={imageRef}
             >
               <FiImage size={24} />
