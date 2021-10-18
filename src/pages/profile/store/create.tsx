@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FaMapPin } from 'react-icons/fa';
 import {
+  FiAlertTriangle,
   FiBriefcase,
   FiCheck,
   FiClock,
@@ -13,6 +14,7 @@ import {
   FiSun,
 } from 'react-icons/fi';
 import { GetServerSideProps, NextPage } from 'next';
+import * as yup from 'yup';
 import { useModal } from '../../../hooks/contexts/ProductModalVisibility';
 import { api } from '../../../services/apiClient';
 
@@ -24,7 +26,7 @@ import { RectButton } from '../../../components/RectButton';
 import {
   Container,
   Content,
-  SignUpForm,
+  CreateStoreForm,
   InputContainer,
   CategoriesContainer,
   CategoryItem,
@@ -44,9 +46,16 @@ interface CategoryData {
   image: string;
 }
 
+interface ValidationErrorData {
+  name: string | undefined;
+  message: string | undefined;
+}
+
 const CreateStore: NextPage = () => {
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [error, setError] = useState<ValidationErrorData[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [coordinates, setCoordinates] = useState<CoordinatesData>(
     {} as CoordinatesData
   );
@@ -84,7 +93,46 @@ const CreateStore: NextPage = () => {
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    setIsDisabled(true);
+
     try {
+      const schema = yup.object().shape({
+        name: yup.string().required('Field name is required.'),
+        delivery_fee: yup
+          .number()
+          .typeError('Field delivery fee is required.')
+          .required(),
+        delivery_time: yup
+          .number()
+          .typeError('Field delivery time is required.')
+          .required(),
+        opening_time_workweek: yup
+          .string()
+          .required('Field opening time workweek is required.'),
+        opening_time_weekend: yup
+          .string()
+          .required('Field opening time weekend is required.'),
+        address: yup.string().required('Field address is required.'),
+        image: yup
+          .object()
+          .shape({
+            name: yup.string().required('Field image is required.'),
+          })
+          .nullable(),
+        coordinates: yup
+          .object()
+          .shape({
+            latitude: yup.string().required('Field coordinates is required.'),
+            longitude: yup.string(),
+          })
+          .required('Field coordinates is required.'),
+        categories_id: yup
+          .array()
+          .min(1, 'Each store must have at least one category.')
+          .of(yup.string().required())
+          .required('Field categories is required.'),
+      });
+
       const data = {
         name: String(nameRef.current?.value),
         delivery_fee: String(deliveryFeeRef.current?.value),
@@ -92,10 +140,12 @@ const CreateStore: NextPage = () => {
         opening_time_workweek: String(openingWorkweekRef.current?.value),
         opening_time_weekend: String(openingWeekendRef.current?.value),
         address: String(addressRef.current?.value),
-        image: imageRef.current?.files,
+        image: imageRef.current?.files && imageRef.current?.files[0],
         coordinates: { latitude: coordinates.lat, longitude: coordinates.lng },
         categories_id: selectedCategories,
       };
+
+      await schema.validate(data, { abortEarly: false });
 
       if (!data.image) return;
 
@@ -107,9 +157,10 @@ const CreateStore: NextPage = () => {
       params.append('opening_time_workweek', data.opening_time_workweek);
       params.append('opening_time_weekend', data.opening_time_weekend);
       params.append('address', data.address);
-      params.append('image', data.image[0]);
+      params.append('image', data.image);
       params.append('coordinates', JSON.stringify(data.coordinates));
       params.append('categories_id', JSON.stringify(data.categories_id));
+      setError([]);
 
       await api.post('/stores', params, {
         headers: {
@@ -119,7 +170,14 @@ const CreateStore: NextPage = () => {
 
       router.push('/');
     } catch (err) {
-      console.log(err);
+      setIsDisabled(false);
+      if (err instanceof yup.ValidationError) {
+        const errors = err.inner.map(errElement => {
+          return { name: errElement.path, message: errElement.message };
+        });
+
+        setError(errors);
+      }
     }
   }
 
@@ -131,46 +189,45 @@ const CreateStore: NextPage = () => {
     <Container>
       <ProfileSideNavbar current="store" />
       <Content>
-        <SignUpForm onSubmit={handleSubmit}>
+        <CreateStoreForm onSubmit={handleSubmit}>
           {isOpen && (
             <MapModal handleCoordinatesState={handleCoordinatesState} />
           )}
-          {/* <SignUpForm onSubmit={handleSignIn}> */}
           <h2>Create a new store</h2>
           <p>Fill in all fields to create a new store</p>
           <InputContainer>
-            {/* {error.map(err => (
-                  <span key={err.name}>
-                    <FiAlertTriangle color="#DA3633" size={14} />
-                    {err.message}
-                  </span>
-                ))} */}
+            {error?.map(err => (
+              <span key={err.name}>
+                <FiAlertTriangle color="#DA3633" size={14} />
+                {err.message}
+              </span>
+            ))}
             <FormInput placeholder="Store name" type="text" ref={nameRef}>
               <FiShoppingBag size={24} />
             </FormInput>
             <FormInput
               placeholder="Delivery fee"
-              type="text"
+              type="number"
               ref={deliveryFeeRef}
             >
               <FiDollarSign size={24} />
             </FormInput>
             <FormInput
-              placeholder="Delivery time"
-              type="text"
+              placeholder="Delivery time (minutes)"
+              type="number"
               ref={deliveryTimeRef}
             >
               <FiClock size={24} />
             </FormInput>
             <FormInput
-              placeholder="Opening during workweek"
+              placeholder="Opening during workweek (8-5)"
               type="text"
               ref={openingWorkweekRef}
             >
               <FiBriefcase size={24} />
             </FormInput>
             <FormInput
-              placeholder="Opening during weekend"
+              placeholder="Opening during weekend (8-5)"
               type="text"
               ref={openingWeekendRef}
             >
@@ -212,10 +269,10 @@ const CreateStore: NextPage = () => {
             ))}
           </CategoriesContainer>
 
-          <RectButton type="submit">
+          <RectButton type="submit" disabled={isDisabled}>
             <p>Create store</p>
           </RectButton>
-        </SignUpForm>
+        </CreateStoreForm>
       </Content>
     </Container>
   );

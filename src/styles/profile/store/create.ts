@@ -19,7 +19,7 @@ export const Content = styled.div`
   align-items: center;
 `;
 
-export const SignUpForm = styled.form`
+export const CreateStoreForm = styled.form`
   max-width: 360px;
   width: 100%;
 
@@ -33,17 +33,6 @@ export const SignUpForm = styled.form`
     font-size: 16px;
     padding: 8px 0;
   }
-
-  > span {
-    display: flex;
-    padding: 4px;
-
-    color: var(--error);
-
-    svg {
-      margin-right: 4px;
-    }
-  }
 `;
 
 export const InputContainer = styled.div`
@@ -55,6 +44,17 @@ export const InputContainer = styled.div`
 
   button {
     margin: 8px 0;
+  }
+
+  > span {
+    display: flex;
+    padding: 4px;
+
+    color: var(--error);
+
+    svg {
+      margin-right: 4px;
+    }
   }
 `;
 
