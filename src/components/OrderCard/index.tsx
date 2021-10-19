@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useIntl } from 'react-intl';
+import { en } from '../../content/locale';
 import { api } from '../../services/apiClient';
 import { Button } from '../Button';
 
@@ -27,6 +29,8 @@ interface OrdersData {
 
 export function OrderCard({ ordersData }: OrdersData) {
   const [orders, setOrders] = useState(ordersData);
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en) => formatMessage({ id });
 
   async function handleFinishOrder(id: string) {
     try {
@@ -45,16 +49,20 @@ export function OrderCard({ ordersData }: OrdersData) {
       {orders.map(order => (
         <Order key={order.id}>
           <h3>
-            Order <span>{order.id}</span>
+            {f('ORDER_CARD_TITLE')} <span>{order.id}</span>
           </h3>
           <OrderDetails>
             <OrderStatus isCompleted={order.is_completed}>
               <p>
-                Status:
-                <span>{order.is_completed ? 'Completed' : 'In progress'}</span>
+                {f('ORDER_CARD_STATUS')}
+                <span>
+                  {order.is_completed
+                    ? f('ORDER_CARD_STATUS_COMPLETED')
+                    : f('ORDER_CARD_STATUS_INPROGRESS')}
+                </span>
               </p>
             </OrderStatus>
-            <h3>Products</h3>
+            <h3>{f('ORDER_CARD_PRODUCTS')}</h3>
             {order.orderProducts.map(product => (
               <ProductInfo key={product.id}>
                 <p>{product.product_id.name}</p>
@@ -69,7 +77,7 @@ export function OrderCard({ ordersData }: OrdersData) {
                 dark
                 onClick={() => handleFinishOrder(order.id)}
               >
-                Finish Order
+                {f('ORDER_CARD_FINISH_BUTTON')}
               </Button>
             )}
           </FinishButtonContainer>

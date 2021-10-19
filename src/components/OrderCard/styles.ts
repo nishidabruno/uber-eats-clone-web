@@ -35,12 +35,9 @@ export const OrderDetails = styled.div`
 `;
 
 export const OrderStatus = styled.div<OrderStatusProps>`
-  max-width: 160px;
-  display: flex;
-  align-items: center;
   margin: 8px 0;
   padding: 8px 12px;
-  border-radius: 200px;
+  border-radius: 14px;
   background-color: ${props =>
     props.isCompleted ? 'var(--green)' : 'var(--warning)'};
 
@@ -48,11 +45,11 @@ export const OrderStatus = styled.div<OrderStatusProps>`
     color: ${props =>
       props.isCompleted ? 'var(--primary)' : 'var(--secondary)'};
     font-size: 16px;
+    font-weight: 500;
   }
 
   > p > span {
     margin-left: 4px;
-    font-weight: 500;
   }
 `;
 

@@ -1,6 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { OrderCard } from '../../../components/OrderCard';
 import { ProfileSideNavbar } from '../../../components/ProfileSideNavbar';
+import { useTranslator } from '../../../hooks/useTranslator';
 import { setupAPIClient } from '../../../services/api';
 import { Container, OrdersDashboard } from '../../../styles/profile/orders';
 import { withSSRAuth } from '../../../utils/withSSRAuth';
@@ -20,11 +21,12 @@ interface OrdersData {
 }
 
 const ProfileOrders: NextPage<OrdersData> = ({ ordersData }) => {
+  const { f } = useTranslator();
   return (
     <Container>
       <ProfileSideNavbar current="orders" />
       <OrdersDashboard>
-        <h2>Orders</h2>
+        <h2>{f('PROFILE_ORDER_SUBTITLE')}</h2>
         <OrderCard ordersData={ordersData} />
       </OrdersDashboard>
     </Container>

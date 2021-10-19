@@ -5,6 +5,7 @@ import { ProfileSideNavbar } from '../../components/ProfileSideNavbar';
 
 import { Container, Content, HomeDashboard } from '../../styles/profile';
 import { setupAPIClient } from '../../services/api';
+import { useTranslator } from '../../hooks/useTranslator';
 
 interface UserData {
   userData: {
@@ -14,14 +15,19 @@ interface UserData {
 }
 
 const Profile: NextPage<UserData> = ({ userData }) => {
+  const { f } = useTranslator();
   return (
     <Container>
       <ProfileSideNavbar current="home" />
       <Content>
-        <h1>Home</h1>
+        <h1>{f('PROFILE_HOME_SUBTITLE')}</h1>
         <HomeDashboard>
-          <p>Name: {userData.full_name}</p>
-          <p>Email: {userData.email}</p>
+          <p>
+            {f('PROFILE_HOME_NAME')} {userData.full_name}
+          </p>
+          <p>
+            {f('PROFILE_HOME_EMAIL')} {userData.email}
+          </p>
         </HomeDashboard>
       </Content>
     </Container>

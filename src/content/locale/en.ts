@@ -17,7 +17,6 @@ export const en = {
   SIGNUP_ALREADY_ACC: 'Already have an account?',
   SIGNUP_SIGNIN_LINK: 'Sign in',
   // Navbar
-  // Navbar
   NAV_BAR_DELIVERY_OPTION: 'Delivery',
   NAV_BAR_PICKUP_OPTION: 'Pickup',
   NAVBAR_CURRENT_LOCATION: 'Toyko • Now',
@@ -28,6 +27,33 @@ export const en = {
     'Add items from a restaurant or store to start a new cart',
   CART_MODAL_TITLE: 'Your order',
   CART_MODAL_NEXT_BUTTON_TEXT: 'Next: Checkout',
+  // ProfileSideNavbar
+  PROFILE_SIDE_NAVBAR_HOME_TITLE: 'Home',
+  PROFILE_SIDE_NAVBAR_ORDERS_TITLE: 'Orders',
+  PROFILE_SIDE_NAVBAR_STORE_TITLE: 'Store',
+  PROFILE_SIDE_NAVBAR_WELCOME: 'Welcome back,',
+  // Profile pages
+  PROFILE_HOME_SUBTITLE: 'Home',
+  PROFILE_HOME_NAME: 'Name:',
+  PROFILE_HOME_EMAIL: 'Email:',
+  PROFILE_ORDER_SUBTITLE: 'Orders',
+  PROFILE_STORE_INFORMATION_SUBTITLE: 'Store Information',
+  PROFILE_STORE_NAME: 'Name:',
+  PROFILE_STORE_ADDRESS: 'Address:',
+  PROFILE_STORE_DELIVERY_TIME: 'Delivery time: {number} min',
+  PROFILE_STORE_DELIVERY_FEE: 'Delivery fee:',
+  PROFILE_STORE_OPENING_WORKWEEK: 'Opening workweek:',
+  PROFILE_STORE_OPENING_WEEKEND: 'Opening weekend:',
+  PROFILE_STORE_PRODUCTS_SUBTITLE: 'Products',
+  PROFILE_STORE_PRODUCTS_CREATE_BUTTON: 'Create a new product',
+  PROFILE_STORE_ORDERS_SUBTITLE: 'Store Orders',
+  // OrderCard
+  ORDER_CARD_TITLE: 'Order',
+  ORDER_CARD_STATUS: 'Status:',
+  ORDER_CARD_STATUS_INPROGRESS: 'In Progress',
+  ORDER_CARD_STATUS_COMPLETED: 'Completed',
+  ORDER_CARD_PRODUCTS: 'Products',
+  ORDER_CARD_FINISH_BUTTON: 'Finish Order',
   // Navabar Drawer
   NAVBAR_BUTTON_NAME_SIGN_IN: 'Sign in',
   NAVBAR_BUTTON_NAME_PROFILE: 'Profile',

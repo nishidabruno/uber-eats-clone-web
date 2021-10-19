@@ -1,9 +1,12 @@
 import { GetServerSideProps, NextPage } from 'next';
-
+import { useIntl } from 'react-intl';
+import { withSSRAuth } from '../../../utils/withSSRAuth';
+import { setupAPIClient } from '../../../services/api';
 import { ProfileSideNavbar } from '../../../components/ProfileSideNavbar';
 import { ButtonLink } from '../../../components/ButtonLink';
 import { MenuItem } from '../../../components/MenuItem';
 import { OrderCard } from '../../../components/OrderCard';
+import { en } from '../../../content/locale';
 
 import {
   Container,
@@ -15,8 +18,6 @@ import {
   CreateProductContainer,
   StoreOrders,
 } from '../../../styles/profile/store';
-import { withSSRAuth } from '../../../utils/withSSRAuth';
-import { setupAPIClient } from '../../../services/api';
 
 interface StoreData {
   id: string;
@@ -56,6 +57,10 @@ const ProfileStore: NextPage<ProfileStoreProps> = ({
   storeData,
   ordersData,
 }) => {
+  const { formatMessage } = useIntl();
+  const f = (id: keyof typeof en, number?: number) =>
+    formatMessage({ id }, { number });
+
   return (
     <Container>
       <ProfileSideNavbar current="store" />
@@ -71,16 +76,28 @@ const ProfileStore: NextPage<ProfileStoreProps> = ({
       ) : (
         <StoreDashboard>
           <StoreInfo>
-            <h2>Store Information</h2>
-            <p>Name: {storeData.name}</p>
-            <p>Address: {storeData.address}</p>
-            <p>Delivery Time: {storeData.delivery_time}min</p>
-            <p>Delivery Fee: ¥{storeData.delivery_fee}</p>
-            <p>Opening Workweek: {storeData.opening_time_workweek}</p>
-            <p>Opening Weekend: {storeData.opening_time_weekend}</p>
+            <h2>{f('PROFILE_STORE_INFORMATION_SUBTITLE')}</h2>
+            <p>
+              {f('PROFILE_STORE_NAME')} {storeData.name}
+            </p>
+            <p>
+              {f('PROFILE_STORE_ADDRESS')} {storeData.address}
+            </p>
+            <p>{f('PROFILE_STORE_DELIVERY_TIME', storeData.delivery_time)}</p>
+            <p>
+              {f('PROFILE_STORE_DELIVERY_FEE')} ¥{storeData.delivery_fee}
+            </p>
+            <p>
+              {f('PROFILE_STORE_OPENING_WORKWEEK')}{' '}
+              {storeData.opening_time_workweek}
+            </p>
+            <p>
+              {f('PROFILE_STORE_OPENING_WEEKEND')}{' '}
+              {storeData.opening_time_weekend}
+            </p>
           </StoreInfo>
           <StoreProducts>
-            <h2>Products</h2>
+            <h2>{f('PROFILE_STORE_PRODUCTS_SUBTITLE')}</h2>
             <ProductsList>
               {storeData.products.map(product => (
                 <MenuItem
@@ -94,12 +111,12 @@ const ProfileStore: NextPage<ProfileStoreProps> = ({
             </ProductsList>
             <CreateProductContainer>
               <ButtonLink href="/profile/store/products/create" size="medium">
-                Create a new product
+                {f('PROFILE_STORE_PRODUCTS_CREATE_BUTTON')}
               </ButtonLink>
             </CreateProductContainer>
           </StoreProducts>
           <StoreOrders>
-            <h2>Store Orders</h2>
+            <h2>{f('PROFILE_STORE_ORDERS_SUBTITLE')}</h2>
             <OrderCard ordersData={ordersData} />
           </StoreOrders>
         </StoreDashboard>

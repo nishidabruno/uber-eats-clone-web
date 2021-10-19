@@ -17,6 +17,7 @@ export const Container = styled.button<ButtonProps>`
     }
   }};
   display: flex;
+  justify-content: center;
   flex-shrink: 0;
   align-items: center;
   border: none;
