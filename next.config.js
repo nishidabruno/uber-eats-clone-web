@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
+    domains: [process.env.NEXT_PUBLIC_APP_DOMAIN],
   },
   i18n: {
     locales: ['en', 'ja'],
