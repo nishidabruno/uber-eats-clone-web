@@ -21,7 +21,7 @@ export const ja = {
   NAV_BAR_PICKUP_OPTION: 'お持ち帰り',
   NAVBAR_CURRENT_LOCATION: '東京 • 今すぐ',
   NAVBAR_SEARCHBAR_PLACEHOLDER: '食べたい料理は？',
-  NAVBAR_CART_TITLE: 'カート',
+  NAVBAR_CART: 'カート • {number}',
   // Cart Modal
   CART_MODAL_EMPTY_TEXT:
     '新しいカートを作成するには、レストランやお店から商品を追加します',

@@ -8,14 +8,13 @@ import { BsClockFill } from 'react-icons/bs';
 import { parseCookies } from 'nookies';
 import { useState } from 'react';
 import { FiAlertTriangle } from 'react-icons/fi';
-import { useIntl } from 'react-intl';
 import { RectButton } from '../../components/RectButton';
 import { IState } from '../../store';
 import { ICartState } from '../../store/modules/cart/types';
 import { useAuth } from '../../hooks/contexts/AuthContext';
 import { resetCart } from '../../store/modules/cart/actions';
 import { api } from '../../services/apiClient';
-import { en } from '../../content/locale';
+import { useTranslator } from '../../hooks/useTranslator';
 
 import {
   Container,
@@ -40,10 +39,7 @@ const Order: NextPage = () => {
   const { user } = useAuth();
   const { query, push } = useRouter();
   const dispatch = useDispatch();
-  const { formatMessage } = useIntl();
-  const f = (id: keyof typeof en) => formatMessage({ id });
-  const fNumber = (id: keyof typeof en, time: number) =>
-    formatMessage({ id }, { number: time });
+  const { f } = useTranslator();
 
   async function handleOrder() {
     setIsLoading(true);
@@ -102,7 +98,7 @@ const Order: NextPage = () => {
             </StoreDetailsItem>
             <StoreDetailsItem>
               <BsClockFill size={22} />
-              <p>{fNumber('ORDER_ARRIVING_TIME', 20)}</p>
+              <p>{f('ORDER_ARRIVING_TIME', 20)}</p>
             </StoreDetailsItem>
             <StoreDetailsItem>
               <FaMapPin size={22} />
@@ -112,7 +108,7 @@ const Order: NextPage = () => {
 
           <OrderDetails>
             <OrderDetailItem>
-              <p>{fNumber('ORDER_SUBTOTAL', cartData.totals.totalQuantity)}</p>
+              <p>{f('ORDER_SUBTOTAL', cartData.totals.totalQuantity)}</p>
               <p>¥{cartData.totals.totalPrice}</p>
             </OrderDetailItem>
             <OrderDetailItem>

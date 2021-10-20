@@ -1,11 +1,20 @@
-import { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
+import { AnimatePresence } from 'framer-motion';
+import { FiMenu } from 'react-icons/fi';
 import { withSSRAuth } from '../../utils/withSSRAuth';
-
 import { ProfileSideNavbar } from '../../components/ProfileSideNavbar';
-
-import { Container, Content, HomeDashboard } from '../../styles/profile';
 import { setupAPIClient } from '../../services/api';
 import { useTranslator } from '../../hooks/useTranslator';
+import { useWindowDimension } from '../../hooks/contexts/WindowDimensionContext';
+import { useProfileSideNavBar } from '../../hooks/contexts/ProfileSideNavDrawer';
+import { ProfileSideNavbarDrawer } from '../../components/ProfileSideNavbarDrawer';
+
+import {
+  Container,
+  Content,
+  HomeDashboard,
+  DrawerContainer,
+} from '../../styles/profile';
 
 interface UserData {
   userData: {
@@ -15,11 +24,24 @@ interface UserData {
 }
 
 const Profile: NextPage<UserData> = ({ userData }) => {
+  const { windowDimension } = useWindowDimension();
+  const { isOpen, setIsOpen } = useProfileSideNavBar();
   const { f } = useTranslator();
   return (
     <Container>
-      <ProfileSideNavbar current="home" />
+      {windowDimension > 768 ? (
+        <ProfileSideNavbar current="home" />
+      ) : (
+        <AnimatePresence>
+          {isOpen && <ProfileSideNavbarDrawer current="home" />}
+        </AnimatePresence>
+      )}
       <Content>
+        {windowDimension <= 768 && (
+          <DrawerContainer onClick={() => setIsOpen(prev => !prev)}>
+            <FiMenu size={24} />
+          </DrawerContainer>
+        )}
         <h1>{f('PROFILE_HOME_SUBTITLE')}</h1>
         <HomeDashboard>
           <p>

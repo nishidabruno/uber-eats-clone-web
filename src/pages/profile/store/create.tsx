@@ -17,7 +17,6 @@ import { GetServerSideProps, NextPage } from 'next';
 import * as yup from 'yup';
 import { useModal } from '../../../hooks/contexts/ProductModalVisibility';
 import { api } from '../../../services/apiClient';
-
 import { Button } from '../../../components/Button';
 import { MapModal } from '../../../components/Maps/MapModal';
 import { FormInput } from '../../../components/Forms/input';
@@ -32,7 +31,6 @@ import {
   CategoryItem,
   CategoryTitle,
 } from '../../../styles/profile/store/create';
-import { ProfileSideNavbar } from '../../../components/ProfileSideNavbar';
 import { withSSRAuth } from '../../../utils/withSSRAuth';
 
 interface CoordinatesData {
@@ -187,7 +185,6 @@ const CreateStore: NextPage = () => {
 
   return (
     <Container>
-      <ProfileSideNavbar current="store" />
       <Content>
         <CreateStoreForm onSubmit={handleSubmit}>
           {isOpen && (

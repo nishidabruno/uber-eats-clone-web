@@ -18,3 +18,7 @@ export const OrdersDashboard = styled.div`
     padding: 16px;
   }
 `;
+
+export const DrawerContainer = styled.div`
+  cursor: pointer;
+`;

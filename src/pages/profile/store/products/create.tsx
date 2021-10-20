@@ -1,5 +1,5 @@
 import { FormEvent, useRef, useState } from 'react';
-import { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import {
   FiAlertTriangle,
@@ -8,20 +8,18 @@ import {
   FiImage,
   FiShoppingBag,
 } from 'react-icons/fi';
-
 import * as yup from 'yup';
+import { api } from '../../../../services/apiClient';
+import { FormInput } from '../../../../components/Forms/input';
+import { RectButton } from '../../../../components/RectButton';
+import { withSSRAuth } from '../../../../utils/withSSRAuth';
+
 import {
   Container,
   Content,
   CreateProductForm,
   InputContainer,
 } from '../../../../styles/profile/store/products/create.styles';
-import { api } from '../../../../services/apiClient';
-
-import { ProfileSideNavbar } from '../../../../components/ProfileSideNavbar';
-import { FormInput } from '../../../../components/Forms/input';
-import { RectButton } from '../../../../components/RectButton';
-import { withSSRAuth } from '../../../../utils/withSSRAuth';
 
 interface ValidationErrorData {
   name: string | undefined;
@@ -97,7 +95,6 @@ const CreateStoreProduct: NextPage = () => {
 
   return (
     <Container>
-      <ProfileSideNavbar current="store" />
       <Content>
         <CreateProductForm onSubmit={handleSubmit}>
           <h2>Create a new store product</h2>

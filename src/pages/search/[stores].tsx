@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { Footer } from '../../components/Footer';
 import { LateralMenu } from '../../components/LateralMenu';
 import { Navbar } from '../../components/Navbar';
@@ -20,13 +20,10 @@ import {
 } from '../../styles/category';
 
 interface Data {
-  storesData: {
-    name: string;
-    stores: IStoreData[];
-  };
+  storesData: IStoreData[];
 }
 
-const FindCategory: NextPage<Data> = ({ storesData }) => {
+const FindStore: NextPage<Data> = ({ storesData }) => {
   const { sellingMethod } = useSellingMethod();
   const { windowDimension } = useWindowDimension();
 
@@ -42,25 +39,28 @@ const FindCategory: NextPage<Data> = ({ storesData }) => {
         <Main>
           <>
             <ContentDivider>
-              {windowDimension > 1024 && (
-                <LateralMenu data={storesData.stores} />
-              )}
+              {windowDimension > 1024 && <LateralMenu data={storesData} />}
 
               <AllCategoriesList>
-                <h2>{storesData.name}</h2>
-                <CardsContainer>
-                  {storesData.stores.map((store, index) => (
-                    <StoreCard
-                      key={String(index)}
-                      id={store.id}
-                      title={store.name}
-                      deliveryFee={store.delivery_fee}
-                      deliveryEstimatedTime={store.delivery_time}
-                      image={`${api.defaults.baseURL}/stores/${store.image}`}
-                      rating={9.8}
-                    />
-                  ))}
-                </CardsContainer>
+                {storesData.length >= 1 ? (
+                  <>
+                    <CardsContainer>
+                      {storesData.map((store, index) => (
+                        <StoreCard
+                          key={String(index)}
+                          id={store.id}
+                          title={store.name}
+                          deliveryFee={store.delivery_fee}
+                          deliveryEstimatedTime={store.delivery_time}
+                          image={`${api.defaults.baseURL}/stores/${store.image}`}
+                          rating={9.8}
+                        />
+                      ))}
+                    </CardsContainer>
+                  </>
+                ) : (
+                  <h2>Store not found! :(</h2>
+                )}
               </AllCategoriesList>
             </ContentDivider>
           </>
@@ -68,37 +68,29 @@ const FindCategory: NextPage<Data> = ({ storesData }) => {
       )}
 
       {sellingMethod === 'pickup' && (
-        <PickupContainer storesData={storesData.stores} />
+        <PickupContainer storesData={storesData} />
       )}
       <Footer />
     </Container>
   );
 };
 
-export default FindCategory;
+export default FindStore;
 
 type ParamsType = {
-  id: string;
+  name: string;
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { id } = params as ParamsType;
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { name } = query as ParamsType;
 
   try {
-    const { data: storesData } = await api.get(`/categories/${id}`);
+    const { data: storesData } = await api.get(`/stores/search/?name=${name}`);
 
     return {
       props: {
         storesData,
       },
-      revalidate: 60 * 60 * 24,
     };
   } catch (err) {
     console.log(err);
@@ -106,6 +98,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {},
-    revalidate: 60 * 60 * 24,
   };
 };

@@ -21,7 +21,7 @@ export const en = {
   NAV_BAR_PICKUP_OPTION: 'Pickup',
   NAVBAR_CURRENT_LOCATION: 'Toyko • Now',
   NAVBAR_SEARCHBAR_PLACEHOLDER: 'What are you craving?',
-  NAVBAR_CART_TITLE: 'Cart',
+  NAVBAR_CART: 'Cart • {number}',
   // Cart Modal
   CART_MODAL_EMPTY_TEXT:
     'Add items from a restaurant or store to start a new cart',

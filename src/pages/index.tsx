@@ -1,7 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useIntl } from 'react-intl';
 import { Navbar } from '../components/Navbar';
 import { CategoriesList } from '../components/CategoriesList';
 import { PromotionSlider } from '../components/PromotionSlider';
@@ -9,6 +8,13 @@ import { StoreCard } from '../components/RestuarantCard';
 import { LateralMenu } from '../components/LateralMenu';
 import { Footer } from '../components/Footer';
 import { PickupContainer } from '../components/PickupContainer';
+import { useSellingMethod } from '../hooks/contexts/SellingMethod';
+import { useWindowDimension } from '../hooks/contexts/WindowDimensionContext';
+import { api } from '../services/apiClient';
+import { setStores } from '../store/modules/stores/actions';
+import { IState } from '../store';
+import { IStoreData } from '../store/modules/stores/types';
+import { useTranslator } from '../hooks/useTranslator';
 
 import {
   Container,
@@ -19,13 +25,6 @@ import {
   CardsContainer,
   AllCategoriesList,
 } from '../styles/home.styles';
-import { useSellingMethod } from '../hooks/contexts/SellingMethod';
-import { useWindowDimension } from '../hooks/contexts/WindowDimensionContext';
-import { api } from '../services/apiClient';
-import { setStores } from '../store/modules/stores/actions';
-import { IState } from '../store';
-import { IStoreData } from '../store/modules/stores/types';
-import { en } from '../content/locale/en';
 
 const adBannersData = [
   {
@@ -67,8 +66,7 @@ const Home: NextPage<Data> = ({ storesData, categoriesData }) => {
   const stores = useSelector<IState, IStoreData[]>(
     state => state.stores.storesData
   );
-  const { formatMessage } = useIntl();
-  const f = (id: keyof typeof en) => formatMessage({ id });
+  const { f } = useTranslator();
 
   useEffect(() => {
     dispatch(setStores(storesData));

@@ -4,6 +4,7 @@ import { ProductModalVisibilityContextProvider } from './ProductModalVisibility'
 import { CartContextProvider } from './CartContext';
 import { WindowDimensionContextProvider } from './WindowDimensionContext';
 import { AuthContextProvider } from './AuthContext';
+import { ProfileSideNavContextProvider } from './ProfileSideNavDrawer';
 
 export const ContextProvider: React.FC = ({ children }) => {
   return (
@@ -12,7 +13,9 @@ export const ContextProvider: React.FC = ({ children }) => {
         <SellingMethodContextProvider>
           <ProductModalVisibilityContextProvider>
             <WindowDimensionContextProvider>
-              <CartContextProvider>{children}</CartContextProvider>
+              <ProfileSideNavContextProvider>
+                <CartContextProvider>{children}</CartContextProvider>
+              </ProfileSideNavContextProvider>
             </WindowDimensionContextProvider>
           </ProductModalVisibilityContextProvider>
         </SellingMethodContextProvider>

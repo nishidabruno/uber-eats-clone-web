@@ -1,12 +1,15 @@
-import { GetServerSideProps, NextPage } from 'next';
-import { useIntl } from 'react-intl';
+import type { GetServerSideProps, NextPage } from 'next';
+import { AnimatePresence } from 'framer-motion';
+import { FiMenu } from 'react-icons/fi';
 import { withSSRAuth } from '../../../utils/withSSRAuth';
 import { setupAPIClient } from '../../../services/api';
 import { ProfileSideNavbar } from '../../../components/ProfileSideNavbar';
 import { ButtonLink } from '../../../components/ButtonLink';
 import { MenuItem } from '../../../components/MenuItem';
 import { OrderCard } from '../../../components/OrderCard';
-import { en } from '../../../content/locale';
+import { useWindowDimension } from '../../../hooks/contexts/WindowDimensionContext';
+import { useProfileSideNavBar } from '../../../hooks/contexts/ProfileSideNavDrawer';
+import { ProfileSideNavbarDrawer } from '../../../components/ProfileSideNavbarDrawer';
 
 import {
   Container,
@@ -17,7 +20,9 @@ import {
   ProductsList,
   CreateProductContainer,
   StoreOrders,
+  DrawerContainer,
 } from '../../../styles/profile/store';
+import { useTranslator } from '../../../hooks/useTranslator';
 
 interface StoreData {
   id: string;
@@ -57,16 +62,27 @@ const ProfileStore: NextPage<ProfileStoreProps> = ({
   storeData,
   ordersData,
 }) => {
-  const { formatMessage } = useIntl();
-  const f = (id: keyof typeof en, number?: number) =>
-    formatMessage({ id }, { number });
+  const { windowDimension } = useWindowDimension();
+  const { isOpen, setIsOpen } = useProfileSideNavBar();
+  const { f } = useTranslator();
 
   return (
     <Container>
-      <ProfileSideNavbar current="store" />
+      {windowDimension > 768 ? (
+        <ProfileSideNavbar current="store" />
+      ) : (
+        <AnimatePresence>
+          {isOpen && <ProfileSideNavbarDrawer current="store" />}
+        </AnimatePresence>
+      )}
 
       {!storeData?.id ? (
         <CreateStoreSuggesstionContainer>
+          {windowDimension <= 768 && (
+            <DrawerContainer onClick={() => setIsOpen(prev => !prev)}>
+              <FiMenu size={24} />
+            </DrawerContainer>
+          )}
           <h2>Oops, looks like you don&apos;t own a store yet</h2>
           <p>Create a store by click the button below</p>
           <ButtonLink href="/profile/store/create" size="medium" dark>
@@ -75,6 +91,11 @@ const ProfileStore: NextPage<ProfileStoreProps> = ({
         </CreateStoreSuggesstionContainer>
       ) : (
         <StoreDashboard>
+          {windowDimension <= 768 && (
+            <DrawerContainer onClick={() => setIsOpen(prev => !prev)}>
+              <FiMenu size={24} />
+            </DrawerContainer>
+          )}
           <StoreInfo>
             <h2>{f('PROFILE_STORE_INFORMATION_SUBTITLE')}</h2>
             <p>

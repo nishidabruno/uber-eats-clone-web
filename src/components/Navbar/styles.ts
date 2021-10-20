@@ -97,7 +97,7 @@ export const LocationContainer = styled.div<NavBarInterface>`
   }
 `;
 
-export const InputContainer = styled.div<InputProps>`
+export const InputContainer = styled.form<InputProps>`
   display: flex;
   align-items: center;
   flex: 1;

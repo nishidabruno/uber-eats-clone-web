@@ -1,16 +1,15 @@
-import { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useState, useRef, FormEvent } from 'react';
 import { FiAlertTriangle, FiLock, FiMail, FiUser } from 'react-icons/fi';
 import * as yup from 'yup';
-import { useIntl } from 'react-intl';
 import { FormInput } from '../components/Forms/input';
 import { RectButton } from '../components/RectButton';
 import { api } from '../services/apiClient';
 import { withSSRGuest } from '../utils/withSSRGuest';
-import { en } from '../content/locale';
+import { useTranslator } from '../hooks/useTranslator';
 
 import {
   Container,
@@ -32,8 +31,7 @@ const SignUp: NextPage = () => {
   const fullnameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordConfirmationRef = useRef<HTMLInputElement>(null);
-  const { formatMessage } = useIntl();
-  const f = (id: keyof typeof en) => formatMessage({ id });
+  const { f } = useTranslator();
 
   const router = useRouter();
 

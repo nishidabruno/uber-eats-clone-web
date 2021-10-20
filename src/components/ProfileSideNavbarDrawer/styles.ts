@@ -1,20 +1,39 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
+interface NavbarDrawerProps {
+  isOpen: boolean;
+}
 
 interface ProfileSideNavBarProps {
   isActive: boolean;
 }
 
-export const Container = styled.div`
-  max-width: 290px;
-  width: 100%;
-  height: 100vh;
-  position: sticky;
+export const Container = styled(motion.div)<NavbarDrawerProps>`
+  position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  display: flex;
+  z-index: 15;
+
+  background-color: rgba(38, 38, 38, 0.8);
+`;
+
+export const Content = styled(motion.div)<NavbarDrawerProps>`
+  width: 80vw;
+  max-width: 300px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   background-color: var(--shape_secondary);
+`;
+
+export const FreeSpace = styled.div`
+  width: 100%;
+  height: 100vh;
 `;
 
 export const Logo = styled.a`
@@ -31,10 +50,14 @@ export const MenuOption = styled.a<ProfileSideNavBarProps>`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 14px 0 14px 32px;
+
+  padding: 14px 0 14px 18px;
+
   border-radius: 16px 0 0 16px;
+
   background-color: ${props =>
     props.isActive ? 'var(--shape_dark)' : 'var(--shape_secondary)'};
+
   color: var(--text_detail);
 
   transition: background-color 0.2s;
@@ -43,8 +66,7 @@ export const MenuOption = styled.a<ProfileSideNavBarProps>`
   }
 
   > p {
-    margin-left: 16px;
-    font-size: 16px;
+    margin-left: 14px;
   }
 
   > svg {
@@ -60,6 +82,7 @@ export const UserDetails = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 16px;
 
   > button {

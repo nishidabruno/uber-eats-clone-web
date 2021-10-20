@@ -41,6 +41,10 @@ export const StoreDashboard = styled.div`
   }
 `;
 
+export const DrawerContainer = styled.div`
+  cursor: pointer;
+`;
+
 /* ------ StoreInfo ------ */
 export const StoreInfo = styled.div`
   > p {

@@ -20,3 +20,7 @@ export const HomeDashboard = styled.div`
     padding: 4px 0;
   }
 `;
+
+export const DrawerContainer = styled.div`
+  cursor: pointer;
+`;

@@ -13,6 +13,7 @@ export const Content = styled.div`
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding: 16px;
 `;
 
 export const CreateProductForm = styled.form`
