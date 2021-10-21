@@ -43,4 +43,9 @@ export const Container = styled.button<ButtonProps>`
     background-color: ${props =>
       props.dark ? 'var(--dark_active)' : 'var(--light_active)'};
   }
+
+  &:disabled {
+    background-color: ${props =>
+      props.dark ? 'var(--dark_active)' : 'var(--light_active)'};
+  }
 `;

@@ -103,7 +103,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         storesData,
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 60,
     };
   } catch (err) {
     console.log(err);
@@ -111,6 +111,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {},
-    revalidate: 60 * 60 * 24,
+    revalidate: 60,
   };
 };

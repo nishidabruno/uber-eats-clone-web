@@ -25,6 +25,7 @@ export const Container = styled.a`
 
   &:disabled {
     cursor: not-allowed;
-    background-color: var(--dark_hover);
+    background-color: ${props =>
+      props.color === 'green' ? 'var(--success_active)' : 'var(--dark_active)'};
   }
 `;
