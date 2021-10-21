@@ -15,6 +15,7 @@ import { setStores } from '../store/modules/stores/actions';
 import { IState } from '../store';
 import { IStoreData } from '../store/modules/stores/types';
 import { useTranslator } from '../hooks/useTranslator';
+import { imagesApi } from '../services/imagesApi';
 
 import {
   Container,
@@ -102,7 +103,7 @@ const Home: NextPage<Data> = ({ storesData, categoriesData }) => {
                       title={store.name}
                       deliveryFee={store.delivery_fee}
                       deliveryEstimatedTime={store.delivery_time}
-                      image={`${api.defaults.baseURL}/stores/${store.image}`}
+                      image={`${imagesApi.baseURL}/stores/${store.image}`}
                       rating={9.8}
                     />
                   ))}

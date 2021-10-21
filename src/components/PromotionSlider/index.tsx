@@ -76,7 +76,6 @@ export function PromotionSlider({ data }: PromotionSliderProps) {
                   width={575}
                   height={244}
                   layout="responsive"
-                  // objectFit="contain"
                 />
               </Banner>
             </SwiperSlide>

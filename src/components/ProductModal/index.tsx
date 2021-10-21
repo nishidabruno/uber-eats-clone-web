@@ -6,13 +6,13 @@ import { useIntl } from 'react-intl';
 import { useModal } from '../../hooks/contexts/ProductModalVisibility';
 import { ModalCloseButton } from '../ModalCloseButton';
 import { RectButton } from '../RectButton';
-import { api } from '../../services/apiClient';
 import { useCart } from '../../hooks/contexts/CartContext';
 import {
   addProductToCart,
   getCartTotal,
 } from '../../store/modules/cart/actions';
 import { en } from '../../content/locale';
+import { imagesApi } from '../../services/imagesApi';
 
 import {
   Container,
@@ -64,7 +64,7 @@ export function ProductModal() {
       <Content>
         <ImageContainer>
           <Image
-            src={`${api.defaults.baseURL}/products/${product.image}`}
+            src={`${imagesApi.baseURL}/products/${product.image}`}
             width={676}
             height={400}
             objectFit="cover"

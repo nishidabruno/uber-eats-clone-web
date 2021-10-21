@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { imagesApi } from '../../services/imagesApi';
 
 import {
   Container,
@@ -8,7 +9,6 @@ import {
   ImageContainer,
   TitleContainer,
 } from './styles';
-import { api } from '../../services/apiClient';
 
 interface CategoriesListProps {
   categoriesData: {
@@ -42,7 +42,7 @@ export function CategoriesList({ categoriesData }: CategoriesListProps) {
                 isHovered={isHovered && activeId === Number(index)}
               >
                 <Image
-                  src={`${api.defaults.baseURL}/categories/${item.image}`}
+                  src={`${imagesApi.baseURL}/categories/${item.image}`}
                   alt={item.name}
                   width={60}
                   height={60}

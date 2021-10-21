@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl';
-import { api } from '../../services/apiClient';
 import { en } from '../../content/locale/en';
+import { imagesApi } from '../../services/imagesApi';
 
 import {
   Container,
@@ -37,7 +37,7 @@ export function Jumbotron({
         </StoreDetails>
       </StoreImageDetails>
       <Background
-        src={`${api.defaults.baseURL}/stores/${image}`}
+        src={`${imagesApi.baseURL}/stores/${image}`}
         alt="McDonald's"
       />
     </Container>

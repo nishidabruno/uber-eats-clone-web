@@ -1,6 +1,5 @@
 import Link from 'next/link';
-
-import { api } from '../../services/apiClient';
+import { imagesApi } from '../../services/imagesApi';
 
 import { Container, Image, StoreDetailsContainer } from './styles';
 
@@ -23,7 +22,7 @@ export function LateralDeliveryMenuStoreCard({
     <Link href={`/store/${storeId}`} passHref>
       <Container>
         <Image
-          src={`${api.defaults.baseURL}/stores/${storeImage}`}
+          src={`${imagesApi.baseURL}/stores/${storeImage}`}
           width={178}
           height={112}
           objectFit="cover"

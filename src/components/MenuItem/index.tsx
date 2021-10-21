@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { api } from '../../services/apiClient';
+import { imagesApi } from '../../services/imagesApi';
 import { Container, MenuItemInfo, ImageContainer } from './styles';
 
 interface MenuItemProps {
@@ -26,7 +26,7 @@ export function MenuItem({
       </MenuItemInfo>
       <ImageContainer>
         <Image
-          src={`${api.defaults.baseURL}/products/${image}`}
+          src={`${imagesApi.baseURL}/products/${image}`}
           alt={name}
           width={158}
           height={158}

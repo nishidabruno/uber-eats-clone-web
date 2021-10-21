@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { api } from '../../../services/apiClient';
+import { imagesApi } from '../../../services/imagesApi';
 
 import { Container, Content } from './styles';
 
@@ -18,7 +18,7 @@ export function StoreInfoPopup({ storeData, onClick }: StoreInfoPopupProps) {
     <Container onClick={onClick}>
       <div>
         <Image
-          src={`${api.defaults.baseURL}/stores/${storeData.image}`}
+          src={`${imagesApi.baseURL}/stores/${storeData.image}`}
           width={320}
           height={180}
           objectFit="cover"

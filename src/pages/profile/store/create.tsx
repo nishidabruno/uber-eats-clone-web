@@ -21,6 +21,8 @@ import { Button } from '../../../components/Button';
 import { MapModal } from '../../../components/Maps/MapModal';
 import { FormInput } from '../../../components/Forms/input';
 import { RectButton } from '../../../components/RectButton';
+import { withSSRAuth } from '../../../utils/withSSRAuth';
+import { imagesApi } from '../../../services/imagesApi';
 
 import {
   Container,
@@ -31,7 +33,6 @@ import {
   CategoryItem,
   CategoryTitle,
 } from '../../../styles/profile/store/create';
-import { withSSRAuth } from '../../../utils/withSSRAuth';
 
 interface CoordinatesData {
   lng: number;
@@ -257,7 +258,7 @@ const CreateStore: NextPage = () => {
                 isSelected={selectedCategories.includes(category.id)}
               >
                 <Image
-                  src={`${api.defaults.baseURL}/categories/${category.image}`}
+                  src={`${imagesApi.baseURL}/categories/${category.image}`}
                   width={60}
                   height={60}
                 />

@@ -7,6 +7,7 @@ import { StoreCard } from '../../components/RestuarantCard';
 import { useSellingMethod } from '../../hooks/contexts/SellingMethod';
 import { useWindowDimension } from '../../hooks/contexts/WindowDimensionContext';
 import { api } from '../../services/apiClient';
+import { imagesApi } from '../../services/imagesApi';
 import { IStoreData } from '../../store/modules/stores/types';
 
 import {
@@ -52,7 +53,7 @@ const FindStore: NextPage<Data> = ({ storesData }) => {
                           title={store.name}
                           deliveryFee={store.delivery_fee}
                           deliveryEstimatedTime={store.delivery_time}
-                          image={`${api.defaults.baseURL}/stores/${store.image}`}
+                          image={`${imagesApi.baseURL}/stores/${store.image}`}
                           rating={9.8}
                         />
                       ))}
