@@ -20,6 +20,7 @@ import { useWindowDimension } from '../../hooks/contexts/WindowDimensionContext'
 interface PromotionSliderProps {
   data: {
     image: string;
+    alt: string;
   }[];
 }
 
@@ -44,7 +45,7 @@ export function PromotionSlider({ data }: PromotionSliderProps) {
 
   return (
     <Container>
-      <BackButton ref={prevButtonRef}>
+      <BackButton ref={prevButtonRef} type="button" aria-label="back">
         <FiArrowLeft size={24} />
       </BackButton>
 
@@ -73,6 +74,7 @@ export function PromotionSlider({ data }: PromotionSliderProps) {
               <Banner>
                 <Image
                   src={item.image}
+                  alt={item.alt}
                   width={575}
                   height={244}
                   layout="responsive"
@@ -83,7 +85,7 @@ export function PromotionSlider({ data }: PromotionSliderProps) {
         </BannersContainer>
       </Swiper>
 
-      <NextButton ref={nextButtonRef}>
+      <NextButton ref={nextButtonRef} type="button" aria-label="next">
         <FiArrowRight size={24} />
       </NextButton>
     </Container>

@@ -120,17 +120,17 @@ export function Footer() {
       <FooterBottom>
         <SocialLinks>
           <Link href="/">
-            <a>
+            <a aria-label="Link to Facebook">
               <FiFacebook size={18} color="#fff" />
             </a>
           </Link>
           <Link href="/">
-            <a>
+            <a aria-label="Link to Twitter">
               <FiTwitter size={18} color="#fff" />
             </a>
           </Link>
           <Link href="/">
-            <a>
+            <a aria-label="Link to Instagram">
               <FiInstagram size={18} color="#fff" />
             </a>
           </Link>

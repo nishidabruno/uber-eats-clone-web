@@ -1,3 +1,5 @@
+import Head from 'next/head';
+import Link from 'next/link';
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Footer } from '../../components/Footer';
 import { Jumbotron } from '../../components/Jumbotron';
@@ -55,6 +57,9 @@ const Store: NextPage<StoreProps> = ({ data }) => {
 
   return (
     <>
+      <Head>
+        <title>Uber eats | {data.name}</title>
+      </Head>
       <Container>
         {isOpen && <ProductModal />}
         <Header>
@@ -74,12 +79,16 @@ const Store: NextPage<StoreProps> = ({ data }) => {
                 <span>
                   ¥
                   {data.categories.map(category => (
-                    <a key={category.id}>{category.name}</a>
+                    <Link key={category.id} href={`/category/${category.id}`}>
+                      <a>{category.name}</a>
+                    </Link>
                   ))}
                 </span>
                 <span>
                   {data.address}
-                  <a>More</a>
+                  <Link href="/">
+                    <a>More stores</a>
+                  </Link>
                 </span>
               </StoreInfo>
             </Wrapper>

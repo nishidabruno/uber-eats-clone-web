@@ -73,23 +73,19 @@ export function LateralMenu({ data }: StoresData) {
           <LateralMenuItem title={f('LATERAL_MENU_SORT_TITLE')}>
             <SortingContainer>
               <SortingItem>
-                <label>
-                  <CustomRadioInput
-                    name="sortOption"
-                    checked
-                    onClick={handleSetDefault}
-                  />
-                </label>
-                <p>{f('LATERAL_MENU_SORT_PICKED_FOR_YOU')}</p>
+                <CustomRadioInput
+                  name="sortOption"
+                  checked
+                  labelText={f('LATERAL_MENU_SORT_PICKED_FOR_YOU')}
+                  onClick={handleSetDefault}
+                />
               </SortingItem>
               <SortingItem>
-                <label>
-                  <CustomRadioInput
-                    name="sortOption"
-                    onClick={handleSortByDeliveryTime}
-                  />
-                </label>
-                <p>{f('LATERAL_MENU_SORT_DELIVERY_TIME')}</p>
+                <CustomRadioInput
+                  labelText={f('LATERAL_MENU_SORT_DELIVERY_TIME')}
+                  name="sortOption"
+                  onClick={handleSortByDeliveryTime}
+                />
               </SortingItem>
             </SortingContainer>
           </LateralMenuItem>
@@ -113,18 +109,20 @@ export function LateralMenu({ data }: StoresData) {
 
           <LateralMenuItem title={f('LATERAL_MENU_MAX_DELIVERY_FEE_TITLE')}>
             <MaxDeliveryFeeContainer>
-              <RangePointContainer>
-                <input
-                  type="range"
-                  max="3"
-                  step="1"
-                  onChange={event => handleDeliveryFee(event.target.value)}
-                />
-                <RangeSteps>
-                  <span />
-                  <span />
-                </RangeSteps>
-              </RangePointContainer>
+              <label>
+                <RangePointContainer>
+                  <input
+                    type="range"
+                    max="3"
+                    step="1"
+                    onChange={event => handleDeliveryFee(event.target.value)}
+                  />
+                  <RangeSteps>
+                    <span />
+                    <span />
+                  </RangeSteps>
+                </RangePointContainer>
+              </label>
               <DeliveyFeeValuesContainer>
                 <span>¥100</span>
                 <span>¥300</span>

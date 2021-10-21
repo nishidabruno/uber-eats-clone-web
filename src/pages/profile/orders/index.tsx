@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
 import { AnimatePresence } from 'framer-motion';
 import { FiMenu } from 'react-icons/fi';
@@ -36,6 +37,9 @@ const ProfileOrders: NextPage<OrdersData> = ({ ordersData }) => {
   const { f } = useTranslator();
   return (
     <Container>
+      <Head>
+        <title>Uber eats | Profile</title>
+      </Head>
       {windowDimension > 768 ? (
         <ProfileSideNavbar current="orders" />
       ) : (

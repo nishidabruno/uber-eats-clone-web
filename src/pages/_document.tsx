@@ -1,4 +1,3 @@
-// eslint-disable-next-line @next/next/no-document-import-in-page
 import Document, {
   DocumentInitialProps,
   DocumentContext,
@@ -63,6 +62,10 @@ export default class MyDocument extends Document {
             rel="alternate"
             hrefLang="ja"
             href={`${process.env.NEXT_PUBLIC_APP_URL}/ja`}
+          />
+          <meta
+            name="description"
+            content="Uber eats clone for educational purposes"
           />
         </Head>
         <body>

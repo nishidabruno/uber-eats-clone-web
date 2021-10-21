@@ -26,7 +26,12 @@ export function ProfileSideNavbar({ current }: ProfileSideNavBarProps) {
       <Nav>
         <Link href="/" passHref>
           <Logo>
-            <Image src="/assets/logo.svg" width={160} height={80} />
+            <Image
+              src="/assets/logo.svg"
+              alt="Uber eats"
+              width={160}
+              height={80}
+            />
           </Logo>
         </Link>
         <Link href="/profile" passHref>
@@ -54,7 +59,7 @@ export function ProfileSideNavbar({ current }: ProfileSideNavBarProps) {
           <span>{f('PROFILE_SIDE_NAVBAR_WELCOME')}</span>
           <p>{user.email}</p>
         </User>
-        <button type="button" onClick={signOut}>
+        <button type="button" onClick={signOut} aria-label="sign out">
           <FiLogOut size={24} />
         </button>
       </UserDetails>

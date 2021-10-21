@@ -17,7 +17,11 @@ export function LateralMenuItem({ title, children }: LateralMenuProps) {
     <Container isOpen={isOpen}>
       <DrawingContainer>
         <h3>{title}</h3>
-        <button type="button" onClick={handleAccordion}>
+        <button
+          type="button"
+          onClick={handleAccordion}
+          aria-label={isOpen ? 'close' : 'open'}
+        >
           {isOpen ? <FiChevronUp size={24} /> : <FiChevronDown size={24} />}
         </button>
       </DrawingContainer>

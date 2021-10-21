@@ -48,11 +48,9 @@ export const DownloadsLink = styled.div`
   }
 `;
 
-export const LinkList = styled.ul`
+export const LinkList = styled.div`
   width: 50%;
   display: flex;
-
-  list-style: none;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -60,10 +58,10 @@ export const LinkList = styled.ul`
   }
 `;
 
-export const LinksSection = styled.div`
+export const LinksSection = styled.ul`
   width: 50%;
 
-  & + div {
+  & + ul {
     margin-left: 32px;
   }
 
@@ -71,7 +69,7 @@ export const LinksSection = styled.div`
     margin-top: 68px;
     width: 100%;
 
-    & + div {
+    & + ul {
       margin-left: 0;
     }
   }

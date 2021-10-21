@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
 import { Footer } from '../../components/Footer';
 import { LateralMenu } from '../../components/LateralMenu';
@@ -30,6 +31,9 @@ const FindStore: NextPage<Data> = ({ storesData }) => {
 
   return (
     <Container>
+      <Head>
+        <title>Uber eats | Search</title>
+      </Head>
       <Wrapper>
         <Header sellingMethod={sellingMethod}>
           <Navbar />

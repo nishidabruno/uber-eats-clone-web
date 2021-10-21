@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -73,6 +74,9 @@ const Order: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>Uber eats | Order</title>
+      </Head>
       <Header>
         <Link href="/">
           <a>

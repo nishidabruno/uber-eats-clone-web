@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import type { GetStaticProps, NextPage } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -30,21 +31,27 @@ import {
 const adBannersData = [
   {
     image: '/assets/banners/ad_20off.png',
+    alt: 'ad_20off',
   },
   {
     image: '/assets/banners/ad_1800off.png',
+    alt: 'ad_1800off',
   },
   {
     image: '/assets/banners/ad_2200off.jpg',
+    alt: 'ad_2200off',
   },
   {
     image: '/assets/banners/ad_job.jpg',
+    alt: 'ad_job',
   },
   {
     image: '/assets/banners/ad_udon.png',
+    alt: 'ad_udon',
   },
   {
     image: '/assets/banners/ad_udon.png',
+    alt: 'ad_udon2',
   },
 ];
 
@@ -75,6 +82,9 @@ const Home: NextPage<Data> = ({ storesData, categoriesData }) => {
 
   return (
     <Container>
+      <Head>
+        <title>Uber eats | Home</title>
+      </Head>
       <Wrapper>
         <Header sellingMethod={sellingMethod}>
           <Navbar />

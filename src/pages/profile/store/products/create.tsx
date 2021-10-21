@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { FormEvent, useRef, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -95,6 +96,9 @@ const CreateStoreProduct: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>Uber eats | Profile</title>
+      </Head>
       <Content>
         <CreateProductForm onSubmit={handleSubmit}>
           <h2>Create a new store product</h2>

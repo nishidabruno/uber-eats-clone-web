@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -186,6 +187,9 @@ const CreateStore: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>Uber eats | Profile</title>
+      </Head>
       <Content>
         <CreateStoreForm onSubmit={handleSubmit}>
           {isOpen && (

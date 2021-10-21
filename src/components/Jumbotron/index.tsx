@@ -1,13 +1,9 @@
+import Image from 'next/image';
 import { useIntl } from 'react-intl';
 import { en } from '../../content/locale/en';
 import { imagesApi } from '../../services/imagesApi';
 
-import {
-  Container,
-  StoreImageDetails,
-  StoreDetails,
-  Background,
-} from './styles';
+import { Container, StoreImageDetails, StoreDetails } from './styles';
 
 interface JumbotronProps {
   image: string;
@@ -36,9 +32,11 @@ export function Jumbotron({
           </span>
         </StoreDetails>
       </StoreImageDetails>
-      <Background
+      <Image
         src={`${imagesApi.baseURL}/stores/${image}`}
-        alt="McDonald's"
+        alt={title}
+        layout="fill"
+        objectFit="cover"
       />
     </Container>
   );

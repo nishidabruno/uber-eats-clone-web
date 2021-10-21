@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -80,6 +81,9 @@ const SignUp: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>Uber eats | Sign up</title>
+      </Head>
       <AuthContainer>
         <Image src="/assets/logo.svg" width={180} height={50} />
         <SignUpForm onSubmit={handleSignUp}>

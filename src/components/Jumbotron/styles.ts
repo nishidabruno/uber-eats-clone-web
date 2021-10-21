@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
+  width: 100%;
+  height: 260px;
 `;
 
 export const StoreImageDetails = styled.div`
@@ -49,10 +51,4 @@ export const StoreDetails = styled.div`
       -webkit-box-orient: vertical;
     }
   }
-`;
-
-export const Background = styled.img`
-  height: 260px;
-  width: 100%;
-  object-fit: cover;
 `;
