@@ -1,4 +1,6 @@
 export const en = {
+  // Universal
+  UNI_LOADING: 'Loading...',
   // Sign in
   SIGNIN_LOGIN: 'Login',
   SIGNIN_SUBTITLE: 'Login to your account and start ordering',

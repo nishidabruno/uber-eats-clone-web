@@ -272,7 +272,7 @@ const CreateStore: NextPage = () => {
           </CategoriesContainer>
 
           <RectButton type="submit" disabled={isDisabled}>
-            <p>Create store</p>
+            <p>{!isDisabled ? 'Create store' : 'Loading...'}</p>
           </RectButton>
         </CreateStoreForm>
       </Content>

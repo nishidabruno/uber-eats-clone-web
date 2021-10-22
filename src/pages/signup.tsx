@@ -27,6 +27,7 @@ interface ValidationErrorData {
 
 const SignUp: NextPage = () => {
   const [error, setError] = useState<ValidationErrorData[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const fullnameRef = useRef<HTMLInputElement>(null);
@@ -38,6 +39,7 @@ const SignUp: NextPage = () => {
 
   async function handleSignUp(event: FormEvent) {
     event.preventDefault();
+    setIsDisabled(true);
     try {
       const schema = yup.object().shape({
         email: yup.string().required('E-mail is required'),
@@ -69,6 +71,7 @@ const SignUp: NextPage = () => {
 
       await router.push('/');
     } catch (err) {
+      setIsDisabled(false);
       if (err instanceof yup.ValidationError) {
         const errors = err.inner.map(errElement => {
           return { name: errElement.path, message: errElement.message };
@@ -126,8 +129,8 @@ const SignUp: NextPage = () => {
             </FormInput>
           </InputContainer>
 
-          <RectButton type="submit">
-            <p>{f('SIGNUP_CONFIRM_BUTTON')}</p>
+          <RectButton type="submit" disabled={isDisabled}>
+            <p>{!isDisabled ? f('SIGNUP_CONFIRM_BUTTON') : f('UNI_LOADING')}</p>
           </RectButton>
 
           <LoginOptionContainer>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -6,9 +7,8 @@ import Image from 'next/image';
 import { FaShoppingBag, FaMapPin } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsClockFill } from 'react-icons/bs';
-import { parseCookies } from 'nookies';
-import { useState } from 'react';
 import { FiAlertTriangle } from 'react-icons/fi';
+import { withSSRAuth } from '../../utils/withSSRAuth';
 import { RectButton } from '../../components/RectButton';
 import { IState } from '../../store';
 import { ICartState } from '../../store/modules/cart/types';
@@ -16,6 +16,7 @@ import { useAuth } from '../../hooks/contexts/AuthContext';
 import { resetCart } from '../../store/modules/cart/actions';
 import { api } from '../../services/apiClient';
 import { useTranslator } from '../../hooks/useTranslator';
+import { IStoreData } from '../../store/modules/stores/types';
 
 import {
   Container,
@@ -35,10 +36,11 @@ import {
 const Order: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const cartData = useSelector<IState, ICartState>(state => state.cart);
+  const [storeData, setStoreData] = useState({} as IStoreData);
 
+  const cartData = useSelector<IState, ICartState>(state => state.cart);
   const { user } = useAuth();
-  const { query, push } = useRouter();
+  const { push } = useRouter();
   const dispatch = useDispatch();
   const { f } = useTranslator();
 
@@ -53,7 +55,7 @@ const Order: NextPage = () => {
 
     const orderData = {
       user_id: user.id,
-      store_id: query.storeId,
+      store_id: storeData.id,
       orderProducts,
     };
 
@@ -62,6 +64,7 @@ const Order: NextPage = () => {
       setError('Cart is empty');
       return;
     }
+
     try {
       await api.post('/orders', orderData);
       dispatch(resetCart());
@@ -71,6 +74,16 @@ const Order: NextPage = () => {
       console.log(err);
     }
   }
+
+  useEffect(() => {
+    if (cartData.items.length >= 1) {
+      api
+        .get(`/stores/${cartData.items[0]?.product.store_id}`)
+        .then(response => setStoreData(response.data));
+    } else {
+      push('/');
+    }
+  }, [cartData, push]);
 
   return (
     <Container>
@@ -88,7 +101,7 @@ const Order: NextPage = () => {
         <LeftMenu>
           <h2>{f('ORDER_DELIVERY_DETAILS')}</h2>
           <Address>
-            <p>Japan, 123-456, Tokyo, Shibuya</p>
+            <p>{storeData.address}</p>
             <span>{f('ORDER_DELIVERY_METHOD')}</span>
           </Address>
         </LeftMenu>
@@ -97,12 +110,12 @@ const Order: NextPage = () => {
             <StoreDetailsItem>
               <FaShoppingBag size={22} />
               <p>
-                {f('ORDER_FROM')} <span>McDonalds</span>
+                {f('ORDER_FROM')} <span>{storeData.name}</span>
               </p>
             </StoreDetailsItem>
             <StoreDetailsItem>
               <BsClockFill size={22} />
-              <p>{f('ORDER_ARRIVING_TIME', 20)}</p>
+              <p>{f('ORDER_ARRIVING_TIME', Number(storeData.delivery_time))}</p>
             </StoreDetailsItem>
             <StoreDetailsItem>
               <FaMapPin size={22} />
@@ -117,7 +130,7 @@ const Order: NextPage = () => {
             </OrderDetailItem>
             <OrderDetailItem>
               <p>{f('ORDER_DELIVERY_FEE')}</p>
-              <p>¥0</p>
+              <p>¥{storeData.delivery_fee}</p>
             </OrderDetailItem>
             <OrderDetailItem>
               <p>{f('ORDER_TAXES')}</p>
@@ -125,7 +138,7 @@ const Order: NextPage = () => {
             </OrderDetailItem>
             <TotalContainer>
               <h3>{f('ORDER_TOTAL')}</h3>
-              <h3>¥{cartData.totals.totalPrice}</h3>
+              <h3>¥{cartData.totals.totalPrice + storeData.delivery_fee}</h3>
             </TotalContainer>
             <ErrorContainer>
               {error && (
@@ -151,20 +164,8 @@ const Order: NextPage = () => {
 
 export default Order;
 
-// TODO: Get user info to show on order.
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const cookies = parseCookies(ctx);
-
-  if (!cookies['uber-eats-clone.token']) {
-    return {
-      redirect: {
-        destination: '/signin',
-        permanent: false,
-      },
-    };
-  }
-
+export const getServerSideProps: GetServerSideProps = withSSRAuth(async () => {
   return {
     props: {},
   };
-};
+});

@@ -1,4 +1,6 @@
 export const ja = {
+  // Universal
+  UNI_LOADING: 'ロード中...',
   // Sign in
   SIGNIN_LOGIN: 'ログイン',
   SIGNIN_SUBTITLE: 'ご利用いただきありがとうございます',

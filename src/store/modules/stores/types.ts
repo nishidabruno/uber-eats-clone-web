@@ -11,6 +11,7 @@ export interface IStoreData {
   delivery_fee: string;
   delivery_time: string;
   image: string;
+  address: string;
   products: {
     price: number;
   }[];

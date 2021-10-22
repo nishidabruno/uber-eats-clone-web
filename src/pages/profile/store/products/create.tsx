@@ -139,7 +139,7 @@ const CreateStoreProduct: NextPage = () => {
           </InputContainer>
 
           <RectButton type="submit" disabled={isDisabled}>
-            <p>Create product</p>
+            <p>{!isDisabled ? 'Create product' : 'Loading...'}</p>
           </RectButton>
         </CreateProductForm>
       </Content>

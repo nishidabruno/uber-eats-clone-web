@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
-import { useIntl } from 'react-intl';
 import { useModal } from '../../hooks/contexts/ProductModalVisibility';
 import { ModalCloseButton } from '../ModalCloseButton';
 import { RectButton } from '../RectButton';
@@ -11,8 +10,8 @@ import {
   addProductToCart,
   getCartTotal,
 } from '../../store/modules/cart/actions';
-import { en } from '../../content/locale';
 import { imagesApi } from '../../services/imagesApi';
+import { useTranslator } from '../../hooks/useTranslator';
 
 import {
   Container,
@@ -33,8 +32,7 @@ export function ProductModal() {
   const { setIsOpen, product } = useModal();
   const { setIsOpenCart } = useCart();
   const dispatch = useDispatch();
-  const { formatMessage } = useIntl();
-  const f = (id: keyof typeof en) => formatMessage({ id });
+  const { f } = useTranslator();
 
   function handleCloseProductModal() {
     setIsOpen(prev => !prev);

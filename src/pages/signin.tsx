@@ -122,7 +122,7 @@ const SignIn: NextPage = () => {
           </InputContainer>
 
           <RectButton type="submit" disabled={isDisabled}>
-            <p>{f('SIGNIN_LOGIN')}</p>
+            <p>{!isDisabled ? f('SIGNIN_LOGIN') : f('UNI_LOADING')}</p>
           </RectButton>
 
           <LoginOptionContainer>

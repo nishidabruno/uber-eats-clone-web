@@ -98,7 +98,7 @@ export function CartModal({ show: showCartProp, handleShow }: CartModalProps) {
             ))}
           </OrdersQuantity>
           <CheckoutContainer>
-            <RectButtonLink href={`/order/${query.id}`}>
+            <RectButtonLink href="/order">
               <SpanIcon>2</SpanIcon>
               <NextButtonTitle>
                 {f('CART_MODAL_NEXT_BUTTON_TEXT')}
