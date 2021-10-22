@@ -8,6 +8,7 @@ import { FaShoppingBag, FaMapPin } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsClockFill } from 'react-icons/bs';
 import { FiAlertTriangle } from 'react-icons/fi';
+import { parseCookies } from 'nookies';
 import { withSSRAuth } from '../../utils/withSSRAuth';
 import { RectButton } from '../../components/RectButton';
 import { IState } from '../../store';
@@ -164,8 +165,18 @@ const Order: NextPage = () => {
 
 export default Order;
 
-export const getServerSideProps: GetServerSideProps = withSSRAuth(async () => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const cookies = parseCookies(ctx);
+  if (!cookies['uber-eats-clone.token']) {
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {},
   };
-});
+};
