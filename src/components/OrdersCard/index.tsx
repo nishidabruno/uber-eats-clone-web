@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { useIntl } from 'react-intl';
-import { en } from '../../content/locale';
+import { useFetchSWR } from '../../hooks/useFetchSWR';
+import { useTranslator } from '../../hooks/useTranslator';
 import { api } from '../../services/apiClient';
 import { Button } from '../Button';
 
@@ -13,40 +12,47 @@ import {
   ProductInfo,
 } from './styles';
 
-interface OrdersData {
-  ordersData: {
+interface OrderData {
+  id: string;
+  is_completed: boolean;
+  orderProducts: {
     id: string;
-    is_completed: boolean;
-    orderProducts: {
-      id: string;
-      quantity: string;
-      product_id: {
-        name: string;
-      };
-    }[];
+    quantity: string;
+    product_id: {
+      name: string;
+    };
   }[];
 }
 
-export function OrderCard({ ordersData }: OrdersData) {
-  const [orders, setOrders] = useState(ordersData);
-  const { formatMessage } = useIntl();
-  const f = (id: keyof typeof en) => formatMessage({ id });
+export function OrdersCard() {
+  const { data, error, mutate } = useFetchSWR<OrderData[]>('/orders/list');
+  const { f } = useTranslator();
 
   async function handleFinishOrder(id: string) {
     try {
-      await api.patch(`/orders/status/${id}`, {
+      api.patch(`/orders/status/${id}`, {
         is_completed: true,
       });
-      const filtedOrders = orders.filter(order => order.id !== id);
-      setOrders(filtedOrders);
+
+      const filteredOrders = data?.map(order => {
+        if (order.id === id) {
+          return { ...order, is_completed: true };
+        }
+        return order;
+      });
+
+      mutate(filteredOrders, false);
     } catch (err) {
       console.log(err);
     }
   }
 
+  if (error) return <div>Failed to load, API is offline.</div>;
+  if (!data) return <div>Loading...</div>;
+
   return (
     <Container>
-      {orders.map(order => (
+      {data.map(order => (
         <Order key={order.id}>
           <h3>
             {f('ORDER_CARD_TITLE')} <span>{order.id}</span>
