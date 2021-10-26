@@ -8,6 +8,8 @@
  - [Redux](https://redux.js.org/)
  - [styled-components](https://styled-components.com/)
  - [Mapbox](https://www.mapbox.com/)
+ - [react-intl](https://formatjs.io/)
+ - [swr](https://swr.vercel.app/)
   
 ## Disclaimer
 
