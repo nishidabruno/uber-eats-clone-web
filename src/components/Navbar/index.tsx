@@ -51,8 +51,10 @@ export function Navbar({ showSellingMethod = true }: NavBarInterface) {
   const cartQuantityTotal = useSelector<IState, number>(
     state => state.cart.totals.totalQuantity
   );
+  const deliveryRef = useRef<HTMLDivElement>(null);
+  const pickupRef = useRef<HTMLDivElement>(null);
 
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   function handleShowCart() {
     setIsOpenCart(prev => !prev);
@@ -99,13 +101,20 @@ export function Navbar({ showSellingMethod = true }: NavBarInterface) {
           </Logo>
           {showSellingMethod && (
             <SellingMethod>
-              <Delivery onClick={handleSellingMethodToDelivery}>
+              <Delivery
+                onClick={handleSellingMethodToDelivery}
+                ref={deliveryRef}
+              >
                 <p>{f('NAV_BAR_DELIVERY_OPTION')}</p>
               </Delivery>
-              <Pickup onClick={handleSellingMethodToPickup}>
+              <Pickup onClick={handleSellingMethodToPickup} ref={pickupRef}>
                 <p>{f('NAV_BAR_PICKUP_OPTION')}</p>
               </Pickup>
-              <CurrentSelected currentSellingMethod={sellingMethod} />
+              <CurrentSelected
+                currentSellingMethod={sellingMethod}
+                deliverySize={deliveryRef.current?.offsetWidth}
+                pickupSize={pickupRef.current?.offsetWidth}
+              />
             </SellingMethod>
           )}
           <LocationContainer>
@@ -193,13 +202,20 @@ export function Navbar({ showSellingMethod = true }: NavBarInterface) {
             )}
             {showSellingMethod && (
               <SellingMethod>
-                <Delivery onClick={handleSellingMethodToDelivery}>
+                <Delivery
+                  onClick={handleSellingMethodToDelivery}
+                  ref={deliveryRef}
+                >
                   {f('NAV_BAR_DELIVERY_OPTION')}
                 </Delivery>
-                <Pickup onClick={handleSellingMethodToPickup}>
+                <Pickup onClick={handleSellingMethodToPickup} ref={pickupRef}>
                   {f('NAV_BAR_PICKUP_OPTION')}
                 </Pickup>
-                <CurrentSelected currentSellingMethod={sellingMethod} />
+                <CurrentSelected
+                  currentSellingMethod={sellingMethod}
+                  deliverySize={deliveryRef.current?.offsetWidth}
+                  pickupSize={pickupRef.current?.offsetWidth}
+                />
               </SellingMethod>
             )}
           </ButtonsContainer>

@@ -7,7 +7,7 @@ import { setupAPIClient } from '../../../services/api';
 import { ProfileSideNavbar } from '../../../components/ProfileSideNavbar';
 import { ButtonLink } from '../../../components/ButtonLink';
 import { MenuItem } from '../../../components/MenuItem';
-import { OrderCard } from '../../../components/OrderCard';
+import { OrdersCard } from '../../../components/OrdersCard';
 import { useWindowDimension } from '../../../hooks/contexts/WindowDimensionContext';
 import { useProfileSideNavBar } from '../../../hooks/contexts/ProfileSideNavDrawer';
 import { ProfileSideNavbarDrawer } from '../../../components/ProfileSideNavbarDrawer';
@@ -41,28 +41,11 @@ interface StoreData {
     image: string;
   }[];
 }
-
-interface OrdersData {
-  id: string;
-  is_completed: boolean;
-  orderProducts: {
-    id: string;
-    quantity: string;
-    product_id: {
-      name: string;
-    };
-  }[];
-}
-
 interface ProfileStoreProps {
-  ordersData: OrdersData[];
   storeData: StoreData;
 }
 
-const ProfileStore: NextPage<ProfileStoreProps> = ({
-  storeData,
-  ordersData,
-}) => {
+const ProfileStore: NextPage<ProfileStoreProps> = ({ storeData }) => {
   const { windowDimension } = useWindowDimension();
   const { isOpen, setIsOpen } = useProfileSideNavBar();
   const { f } = useTranslator();
@@ -142,7 +125,7 @@ const ProfileStore: NextPage<ProfileStoreProps> = ({
           </StoreProducts>
           <StoreOrders>
             <h2>{f('PROFILE_STORE_ORDERS_SUBTITLE')}</h2>
-            <OrderCard ordersData={ordersData} />
+            <OrdersCard />
           </StoreOrders>
         </StoreDashboard>
       )}
@@ -157,12 +140,10 @@ export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
 
   const { data: userData } = await api.get('/users/me');
   const { data: storeData } = await api.get(`/stores/user/?id=${userData.id}`);
-  const { data: ordersData } = await api.get(`/orders/store/list?type=open`);
 
   return {
     props: {
       storeData,
-      ordersData,
     },
   };
 });

@@ -7,9 +7,10 @@ interface NavBarInterface {
 interface InputProps {
   isFocused: boolean;
 }
-
 interface CurrentSelectedProps {
   currentSellingMethod: 'delivery' | 'pickup';
+  deliverySize: number | undefined;
+  pickupSize: number | undefined;
 }
 
 export const Container = styled.div`
@@ -37,7 +38,6 @@ export const Logo = styled.div`
 `;
 
 export const SellingMethod = styled.div`
-  /* max-width: 200px; */
   position: relative;
   height: 48px;
   display: flex;
@@ -52,26 +52,12 @@ export const SellingMethod = styled.div`
   }
 `;
 
-export const CurrentSelected = styled.div<CurrentSelectedProps>`
-  position: absolute;
-  width: 50%;
-  height: calc(100% - 10px);
-  border-radius: 24px;
-  transition: transform 0.2s;
-  transform: ${props =>
-    props.currentSellingMethod === 'delivery'
-      ? 'translateX(0)'
-      : 'translateX(70px)'};
-
-  background-color: var(--primary);
-`;
-
 export const Delivery = styled.div`
   height: 100%;
-  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
   z-index: 10;
   border-radius: 24px;
   padding: 0 14px;
@@ -80,13 +66,31 @@ export const Delivery = styled.div`
 
 export const Pickup = styled.div`
   height: 100%;
-  width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   z-index: 10;
   border-radius: 24px;
   padding: 0 16px;
   cursor: pointer;
+`;
+
+export const CurrentSelected = styled.div<CurrentSelectedProps>`
+  position: absolute;
+  width: ${props =>
+    props.currentSellingMethod === 'delivery'
+      ? `${props.deliverySize}px`
+      : `${props.pickupSize}px`};
+  height: calc(100% - 10px);
+  border-radius: 24px;
+  transition: transform 0.2s;
+  transform: ${props =>
+    props.currentSellingMethod === 'delivery'
+      ? 'translateX(0)'
+      : `translateX(${props.deliverySize}px)`};
+
+  background-color: var(--primary);
 `;
 
 export const LocationContainer = styled.div<NavBarInterface>`
