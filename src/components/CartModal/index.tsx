@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import { FaShoppingCart } from 'react-icons/fa';
 import { FiMinusCircle } from 'react-icons/fi';
 import { useIntl } from 'react-intl';
@@ -42,7 +41,6 @@ export function CartModal({ show: showCartProp, handleShow }: CartModalProps) {
     state => state.cart.totals.totalPrice
   );
   const dispatch = useDispatch();
-  const { query } = useRouter();
   const modalRef = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(modalRef, () => setShow(false));
   const { formatMessage } = useIntl();

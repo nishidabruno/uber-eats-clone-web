@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BsClockFill } from 'react-icons/bs';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { parseCookies } from 'nookies';
-import { withSSRAuth } from '../../utils/withSSRAuth';
 import { RectButton } from '../../components/RectButton';
 import { IState } from '../../store';
 import { ICartState } from '../../store/modules/cart/types';
