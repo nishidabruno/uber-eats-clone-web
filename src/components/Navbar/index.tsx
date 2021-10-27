@@ -33,6 +33,7 @@ import {
   ResposiveButtonsContainer,
 } from './styles';
 import { useTranslator } from '../../hooks/useTranslator';
+import { useIsomorphicLayoutEffect } from '../../hooks/useIsomorphicLayoutEffect';
 
 interface NavBarInterface {
   showSellingMethod?: boolean;
@@ -40,6 +41,8 @@ interface NavBarInterface {
 
 export function Navbar({ showSellingMethod = true }: NavBarInterface) {
   const [isFocused, setIsFocused] = useState(false);
+  const [deliverySize, setDeliverySize] = useState(0);
+  const [pickupSize, setPickupSize] = useState(0);
   const { isOpenCart, setIsOpenCart } = useCart();
   const { sellingMethod, setSellingMethod } = useSellingMethod();
   const router = useRouter();
@@ -78,6 +81,13 @@ export function Navbar({ showSellingMethod = true }: NavBarInterface) {
     router.push(`/search/stores/?name=${searchInputRef.current?.value}`);
   }
 
+  useIsomorphicLayoutEffect(() => {
+    if (deliveryRef.current && pickupRef.current) {
+      setDeliverySize(deliveryRef.current.offsetWidth);
+      setPickupSize(pickupRef.current.offsetWidth);
+    }
+  }, []);
+
   return (
     <Container>
       <AnimatePresence>{isOpen && <NavbarDrawer />}</AnimatePresence>
@@ -112,8 +122,8 @@ export function Navbar({ showSellingMethod = true }: NavBarInterface) {
               </Pickup>
               <CurrentSelected
                 currentSellingMethod={sellingMethod}
-                deliverySize={deliveryRef.current?.offsetWidth}
-                pickupSize={pickupRef.current?.offsetWidth}
+                deliverySize={deliverySize}
+                pickupSize={pickupSize}
               />
             </SellingMethod>
           )}
