@@ -21,7 +21,7 @@ export const en = {
   // Navbar
   NAV_BAR_DELIVERY_OPTION: 'Delivery',
   NAV_BAR_PICKUP_OPTION: 'Pickup',
-  NAVBAR_CURRENT_LOCATION: 'Toyko • Now',
+  NAVBAR_CURRENT_LOCATION: 'Tokyo • Now',
   NAVBAR_SEARCHBAR_PLACEHOLDER: 'What are you craving?',
   NAVBAR_CART: 'Cart • {number}',
   // Cart Modal
